@@ -146,6 +146,8 @@ django_pathify = {
     'manage.py':                    [''],
     'model_forms.py':               ['%(APP_NAME)s/'],
     'models.py':                    ['%(APP_NAME)s/'],
+    'notes.txt':                    [''],
+    'README.md':                    [''],
     'requirements.txt':             [''],
     'settings.py':                  ['%(PROJECT_NAME)s/'],
     'settings_local.py':            ['%(PROJECT_NAME)s/'],
