@@ -30,7 +30,7 @@
     <!-- Included CSS Files -->
     <link rel="stylesheet" href="/media/css/foundation.css" />
     <link rel="stylesheet" href="/media/css/app.css" />
-    
+
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="/media/css/ie.css">
     <![endif]-->
@@ -54,27 +54,22 @@
 </head>
 
 <body class="body">
-    {# Content #}
-    <div class="row">
-        <div class="twelve columns">
-              <h2>Welcome to Foundation</h2>
-              <p>This is version 3.0.5 released on July   10, 2012.</p>
-              <hr />
-        </div>
-    </div>
 
+    {# Content #}
     <div class="row">
         <div class="twelve columns">
             <header id="banner">
             </header>
         
             <div class="main" role="main">
-            <!-- PROMPT IE 6 USERS TO INSTALL CHROME FRAME. REMOVE THIS IF YOU SUPPORT IE 6.
-            chromium.org/developers/how-tos/chrome-frame-getting-started -->
-            <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-            <!--Block Content -->
-            {% block content %}{% endblock %}
-            <!-- End Block -->
+                <!-- PROMPT IE 6 USERS TO INSTALL CHROME FRAME. REMOVE THIS IF YOU SUPPORT IE 6.
+                chromium.org/developers/how-tos/chrome-frame-getting-started -->
+                <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+                <!--Block Content -->
+                {% block content %}{% endblock %}
+                <!-- End Block -->
+            
             </div>
         
             <footer class="footer">
