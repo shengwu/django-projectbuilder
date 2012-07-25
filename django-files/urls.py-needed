@@ -23,6 +23,7 @@ urlpatterns = patterns('',
 #    url(r'^%(PROJECT_NAME)s/$', '%(PROJECT_NAME)s_view', name='%(PROJECT_NAME)s'),
 #)
 
+# Potentially take out line
 if settings.DEBUG:
     urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
