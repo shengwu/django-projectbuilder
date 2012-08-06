@@ -29,6 +29,7 @@
 
 # Completed
 - Add Bootstrap and non-Bootstrap options
+- Add Zurb Foundation options
 - Make it so everything can be relative rather than absolute
 - Make more files generic
 - Clean up files
