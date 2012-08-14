@@ -159,8 +159,8 @@ django_pathify = {
 }
 
 # Trailing / may be included or excluded up to this point
-PROJECT_PATH = arguments.path.rstrip('/') + '_site/'
-PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0] # Before the '_site/'
+PROJECT_PATH = arguments.path.rstrip('/') + '/'
+PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0] # Before the '/'
 APP_NAME     = PROJECT_NAME + '_app'
 BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
 
