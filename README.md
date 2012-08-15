@@ -18,7 +18,7 @@ new Django project!
   `git push`!  (Uses git hooks behind the scenes... but you don't need
   to worry about that, do you?)
 
-* Two Front-end options, both with CSS Stylesheets and HTML Templates with a lot of swag.
+* Three Front-end options, both with CSS Stylesheets and HTML Templates with a lot of swag.
 
 
 ## What you don't have to dread anymore
