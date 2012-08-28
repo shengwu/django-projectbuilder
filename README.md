@@ -76,7 +76,7 @@ recommended. Django is awesome.
 
 If you're on a Mac (only been tested with OSX Lion so far) and are missing
 some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
-then `cd` into the repo and run
+then `cd` into django-projectbuilder repo and run
 
     bash install_dependencies.sh
 
@@ -144,8 +144,21 @@ redeploy with
     git commit -m "Updated requirements.txt"
     git push heroku master
 
+Also in order for the app to know Heroku is a production server, this line of code
+will add a heroku config variable for 'PRODUCTION' so settings configure accordingly
+to os.environ
+    
+    heroku config:add PRODUCTION=true
+
 See
 [Getting Started with Django on Heroku/Cedar](https://devcenter.heroku.com/articles/django)
 with more on deploying to Heroku.
+
+### Auto Initial Heroku Deploy
+
+To automate the above steps and create the heroku app for you,
+`cd` into django-projectbuilder repo and run
+
+    bash initial_heroku_deploy.sh
 
 If you run into any other issues, please let us know!
