@@ -16,5 +16,6 @@ from %(APP_NAME)s.models import *
 from %(APP_NAME)s.model_forms import *
 from %(APP_NAME)s.forms import *
 
+#@login_required
 def index(request):
     return render(request, "index.html", locals())
