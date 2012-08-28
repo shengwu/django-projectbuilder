@@ -1,6 +1,15 @@
 jQuery(document).ready(function ($) {
 
-  /* Use this js doc for all application specific JS */
+  /* Javascript masterminded by Kevin Xu <kevin@imkevinxu.com>  */
+
+
+
+
+
+
+
+
+  
 
   /* TABS --------------------------------- */
   /* Remove if you don't need :) */
