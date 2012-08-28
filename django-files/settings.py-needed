@@ -3,7 +3,6 @@
 import os
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
-
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -31,8 +30,6 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-### Set to None so that Django will use the same timezone as the os. This is
-### specific to Unix based-systems. Read above ^
 TIME_ZONE = 'America/Los_Angeles'
 USE_TZ = True
 
@@ -125,11 +122,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    ####
-    # 'sentry',
-    # 'djcelery',
-    # 'mptt',
-    # 'raven.contrib.django',
     'south',
     '%(APP_NAME)s',
 
@@ -167,7 +159,7 @@ LOGGING = {
 ####
 # import local settings overriding the defaults
 ####
-if not os.environ.get('PRODUCTION', False):
+if 'PRODUCTION' not in os.environ:
     try:
         from settings_local import *
     except ImportError:
