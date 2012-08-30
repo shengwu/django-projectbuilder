@@ -18,6 +18,30 @@
    LOGIN Styles
 ----------------------------------------- */
 
+#login {
+    margin-top: 20px;
+    padding: 20px 50px;
+    background-color: #E9E9E9;
+    border: 1px solid #C3C3C3;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#login h2 { text-align: center; }
+#login li { list-style-type: none; }
+
+#login ul.errorlist {
+    color: red;
+    font-style: bold;
+}
+
+#login input[type=submit] {
+    width: 120px;
+    margin-top: 10px;
+    margin-left: 50%;
+    left: -60px;
+}
 
 
 
