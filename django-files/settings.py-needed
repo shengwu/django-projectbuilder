@@ -7,7 +7,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    #('Kevin Xu', 'kevin@imkevinxu.com'),
+    ('%(ADMIN_NAME)s', '%(ADMIN_EMAIL)s'),
 )
 
 MANAGERS = ADMINS

@@ -164,6 +164,10 @@ PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0] # Before the '/'
 APP_NAME     = PROJECT_NAME + '_app'
 BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
 
+# ADMIN INFORMATION
+ADMIN_NAME   = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else ''
+ADMIN_EMAIL  = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else ''
+
 # TODO
 # vewrapper = pbs.which('virtualenvwrapper.sh')
 # vewrapper("")
@@ -184,6 +188,8 @@ replacement_values = {
     'BASE_PATH':        BASE_PATH,
     'SECRET_KEY':       SECRET_KEY,
     'PROJECT_PATH':     PROJECT_PATH,
+    'ADMIN_NAME':       ADMIN_NAME,
+    'ADMIN_EMAIL':      ADMIN_EMAIL,
 }
 
 # Doing it this way so DPB can add 'extra_settings' on the fly.
@@ -224,6 +230,7 @@ if not arguments.quiet:
 # Add directory names here
 generic_dirs = ['media', 'templates']
 generic_dirs = [DPB_PATH + d for d in generic_dirs]
+template_needs_replacements = ['500.html']
 
 for dirname in generic_dirs:
     # cp -r media-generic $PROJECT_PATH/media && cp -r templates-generic ...
@@ -234,6 +241,20 @@ for dirname in generic_dirs:
         shutil.copytree(dirname + '-foundation', new_dir)
     else:
         shutil.copytree(dirname + '-generic', new_dir)
+
+# Replace %(VARIABLES)s with right values for templates
+# Loop through list of templates that should be replaced
+templates_dir = PROJECT_PATH + 'templates/'
+for template in template_needs_replacements:
+    f_read = open(templates_dir + template, 'r')
+    contents = f_read.read()
+    f_read.close()
+
+    f_write = open(templates_dir + template, 'w')
+    for key, value in replacement_values.items():
+        contents = contents.replace('%('+key+')s', value)
+    f_write.write(contents)
+    f_write.close()
 
 if not arguments.quiet:
     print "Making virtualenv..."
