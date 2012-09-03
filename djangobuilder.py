@@ -109,8 +109,17 @@ parser.add_argument('-q', '--quiet', action='store_true', default=False,
                     help='''Quiets all output except the finish message.''',
                     dest='quiet')
 
+# SUPER Argument for imkevinxu
+parser.add_argument('--imkevinxu', action='store_true', default=False,
+                    help='''Super argument with default packages for imkevinxu
+                    including Foundation, Jinja2, and Debug Toolbar.''',
+                    dest='imkevinxu')
 
 arguments = parser.parse_args()
+if arguments.imkevinxu:
+    arguments.foundation = True
+    arguments.jinja2 = True
+    arguments.debug = True
 
 def check_projectname():
     if not re.search(r'^[_a-zA-Z]\w*$', PROJECT_NAME):
@@ -148,7 +157,6 @@ def debugify(contents, filename):
         new += "    'INTERCEPT_REDIRECTS' : False,\n"
         new += "}\n\n"
         contents = insert(contents, new, pos)
-
     return contents
 
 jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'views.py']
