@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 #
-#   Authors:
+#   Original Authors:
 #   Steve Phillips -- steve@builtbyptm.com
 #   AJ v Bahnken   -- aj@builtbyptm.com
+#
+#   Custom Version
+#   Kevin Xu       -- kevin@imkevinxu.com
 
 #
-# Requires virtualenv, virtualenvwrapper, and git
+#   Requires virtualenv, virtualenvwrapper, and git
 #
 
 import os
@@ -93,6 +96,10 @@ parser.add_argument('--bootstrap', action='store_true', default=False,
 parser.add_argument('--foundation', action='store_true', default=False,
                     help='''This will include Foundation 3 as the template
                     and media base of the project.''', dest='foundation')
+# Arg for using Jinja2 with Coffin support as default templating engine
+parser.add_argument('--jinja2', action='store_true', default=False,
+                    help='''This will install Jinja2 and Coffin as the default
+                    templating engine of the project.''', dest='jinja2')
 # Simple ones
 parser.add_argument('-q', '--quiet', action='store_true', default=False,
                     help='''Quiets all output except the finish message.''',
@@ -112,6 +119,25 @@ def check_projectname():
 
         sys.exit(message)
 
+def insert(original, new, pos):
+  '''Inserts new inside original at pos.'''
+  return original[:pos] + new + original[pos:] 
+
+jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'views.py']
+
+def jinjaify(contents, filename):
+    if filename == 'requirements.txt':
+        contents += '\nJinja2==2.6'
+    elif filename == 'settings.py':
+        new = "    'coffin',\n"
+        pos = contents.find('south')+8
+        contents = insert(contents, new, pos)
+    elif filename == 'urls.py':
+        contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
+    elif filename == 'views.py':
+        contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
+    return contents
+
 def copy_files(folder_path, file_types, pathify):
     """Copies the contents of django_files and server_scripts, and
     performs string interpolations (e.g., %(APP_NAME)s => 'myapp')"""
@@ -129,6 +155,9 @@ def copy_files(folder_path, file_types, pathify):
             file_path = dir % replacement_values
             f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
             new_contents = contents % replacement_values
+            # Appends certain attributes to some django files for Jinja2
+            if arguments.jinja2 and new_filename in jinjaify_files:
+                new_contents = jinjaify(new_contents, new_filename)
             f_write.write(new_contents)
             f_write.close()
 
@@ -268,7 +297,7 @@ if not arguments.quiet:
     print '\n', output, '\n'
 
 ## The below part is made much faster with a small requirements.txt.
-## We have the opitions to include more packages, which in turn
+## We have the options to include more packages, which in turn
 ## will take long, but of course is needed. This allows for making
 ## projects which need only the basics, and ones that need a lot.
 
@@ -278,13 +307,31 @@ if not arguments.quiet:
 
 # FIXME Shouldn't assume the location of virtualenvwrapper.sh
 cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
-cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s' % replacement_values
-cmd += ' && pip install -r requirements.txt"'
+cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
+cmd += ' pip install -r requirements.txt"'
 
 output = sh(cmd)
 
 if not arguments.quiet:
     print '\n', output, '\n'
+
+
+# HACK - Installing Coffin via github clone because the pypi
+# version is outdated at v0.3.6 while the git repo is at v0.3.7-dev
+# http://pypi.python.org/pypi/Coffin (v0.3.6 -- 9/9/2011)
+# https://github.com/coffin/coffin (v0.3.7-dev -- 7/16/2012)
+if arguments.jinja2:
+    print "Installing Coffin manually via git clone and setup.py"
+    print "Pypi coffin is outdated at v0.3.6, Git repo is at v0.3.7-dev"
+    cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
+    cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
+    cmd += ' git clone https://github.com/coffin/coffin.git &&'
+    cmd += ' cd coffin && python setup.py install &&'
+    cmd += ' cd .. && rm -rf coffin && pip freeze > requirements.txt"'
+
+    output = sh(cmd)
+    if not arguments.quiet:
+        print '\n', output, '\n'
 
 # virtualenv now exists
 

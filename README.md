@@ -48,7 +48,15 @@ for what's on the horizon, and for what you may want to help out with.
 
 ## So... how do I use it?
 
-### Dev Box Usage
+### Installing Dependencies
+
+If you're on a Mac (only been tested with OSX 10.7 Lion so far) and are missing
+some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
+then `cd` into django-projectbuilder repo and run
+
+    bash install_dependencies.sh
+
+### Local Development Usage
 
 After cloning this repo to your local machine, `cd` into it and run
 something like
@@ -72,13 +80,12 @@ using all Foundation 3 defaults for the front-end.
 `virtualenv` and `virtualenvwrapper` are required. `git` is
 recommended. Django is awesome.
 
-### Installing Dependencies
+### Extra packages
 
-If you're on a Mac (only been tested with OSX Lion so far) and are missing
-some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
-then `cd` into django-projectbuilder repo and run
+If you add the optional `--jinja2` argument, your project will be created
+using Jinja2 as the default Templating engine using Coffin as the adapter
 
-    bash install_dependencies.sh
+    python djangobuilder.py --path ~/new_project --jinja2
 
 ### Server Usage
 
