@@ -82,6 +82,11 @@ recommended. Django is awesome.
 
 ### Extra packages
 
+If you add the optional `--debug` argument, your project will be created
+with the super handy Django Debug Toolbar
+
+    python djangobuilder.py --path ~/new_project --debug
+
 If you add the optional `--jinja2` argument, your project will be created
 using Jinja2 as the default Templating engine using Coffin as the adapter
 

@@ -96,6 +96,10 @@ parser.add_argument('--bootstrap', action='store_true', default=False,
 parser.add_argument('--foundation', action='store_true', default=False,
                     help='''This will include Foundation 3 as the template
                     and media base of the project.''', dest='foundation')
+# Arg for adding Django Debug Toolbar
+parser.add_argument('--debug', action='store_true', default=False,
+                    help='''This will install the Django Debug Toolbar
+                    package for the project.''', dest='debug')
 # Arg for using Jinja2 with Coffin support as default templating engine
 parser.add_argument('--jinja2', action='store_true', default=False,
                     help='''This will install Jinja2 and Coffin as the default
@@ -123,6 +127,30 @@ def insert(original, new, pos):
   '''Inserts new inside original at pos.'''
   return original[:pos] + new + original[pos:] 
 
+debugify_files = ['requirements.txt', 'settings.py']
+
+def debugify(contents, filename):
+    if filename == 'requirements.txt':
+        contents += '\ndjango-debug-toolbar==0.9.4'
+    elif filename == 'settings.py':
+        new = "    'debug_toolbar',\n"
+        keyword = 'south'
+        pos = contents.find(keyword)+len(keyword)+3
+        contents = insert(contents, new, pos)
+
+        new = "    'debug_toolbar.middleware.DebugToolbarMiddleware',\n"
+        keyword = 'XFrameOptionsMiddleware'
+        pos = contents.find(keyword)+len(keyword)+3
+        contents = insert(contents, new, pos)
+
+        pos += len(new)+3
+        new  = "DEBUG_TOOLBAR_CONFIG = {\n"
+        new += "    'INTERCEPT_REDIRECTS' : False,\n"
+        new += "}\n\n"
+        contents = insert(contents, new, pos)
+
+    return contents
+
 jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'views.py']
 
 def jinjaify(contents, filename):
@@ -130,7 +158,8 @@ def jinjaify(contents, filename):
         contents += '\nJinja2==2.6'
     elif filename == 'settings.py':
         new = "    'coffin',\n"
-        pos = contents.find('south')+8
+        keyword = 'south'
+        pos = contents.find(keyword)+len(keyword)+3
         contents = insert(contents, new, pos)
     elif filename == 'urls.py':
         contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
@@ -155,9 +184,14 @@ def copy_files(folder_path, file_types, pathify):
             file_path = dir % replacement_values
             f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
             new_contents = contents % replacement_values
+
+            # Appends certain attributes to some django files for Django Debug Toolbar
+            if arguments.debug and new_filename in debugify_files:
+                new_contents = debugify(new_contents, new_filename)
             # Appends certain attributes to some django files for Jinja2
             if arguments.jinja2 and new_filename in jinjaify_files:
                 new_contents = jinjaify(new_contents, new_filename)
+
             f_write.write(new_contents)
             f_write.close()
 
@@ -314,7 +348,6 @@ output = sh(cmd)
 
 if not arguments.quiet:
     print '\n', output, '\n'
-
 
 # HACK - Installing Coffin via github clone because the pypi
 # version is outdated at v0.3.6 while the git repo is at v0.3.7-dev
