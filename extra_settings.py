@@ -24,7 +24,8 @@ def debugify(contents, filename):
         pos = contents.find(keyword)+len(keyword)+3
         contents = insert(contents, new, pos)
 
-        new = "    'debug_toolbar.middleware.DebugToolbarMiddleware',\n"
+        new  = "    # Comment the next line to disable the Django Debug Toolbar\n"
+        new += "    'debug_toolbar.middleware.DebugToolbarMiddleware',\n"
         keyword = 'XFrameOptionsMiddleware'
         pos = contents.find(keyword)+len(keyword)+3
         contents = insert(contents, new, pos)
@@ -36,7 +37,7 @@ def debugify(contents, filename):
         contents = insert(contents, new, pos)
     return contents
 
-jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'views.py', 'README.md']
+jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'appurls.py', 'views.py', 'README.md']
 
 def jinjaify(contents, filename, replacement_values=None):
     if filename == 'requirements.txt':
@@ -47,7 +48,7 @@ def jinjaify(contents, filename, replacement_values=None):
         keyword = 'south'
         pos = contents.find(keyword)+len(keyword)+3
         contents = insert(contents, new, pos)
-    elif filename == 'urls.py':
+    elif filename == 'urls.py' or filename == 'appurls.py':
         contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
     elif filename == 'views.py':
         contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
