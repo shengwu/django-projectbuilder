@@ -132,48 +132,7 @@ def check_projectname():
 
         sys.exit(message)
 
-def insert(original, new, pos):
-  '''Inserts new inside original at pos.'''
-  return original[:pos] + new + original[pos:] 
-
-debugify_files = ['requirements.txt', 'settings.py']
-
-def debugify(contents, filename):
-    if filename == 'requirements.txt':
-        contents += '\ndjango-debug-toolbar==0.9.4'
-    elif filename == 'settings.py':
-        new = "    'debug_toolbar',\n"
-        keyword = 'south'
-        pos = contents.find(keyword)+len(keyword)+3
-        contents = insert(contents, new, pos)
-
-        new = "    'debug_toolbar.middleware.DebugToolbarMiddleware',\n"
-        keyword = 'XFrameOptionsMiddleware'
-        pos = contents.find(keyword)+len(keyword)+3
-        contents = insert(contents, new, pos)
-
-        pos += len(new)+3
-        new  = "DEBUG_TOOLBAR_CONFIG = {\n"
-        new += "    'INTERCEPT_REDIRECTS' : False,\n"
-        new += "}\n\n"
-        contents = insert(contents, new, pos)
-    return contents
-
-jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'views.py']
-
-def jinjaify(contents, filename):
-    if filename == 'requirements.txt':
-        contents += '\nJinja2==2.6'
-    elif filename == 'settings.py':
-        new = "    'coffin',\n"
-        keyword = 'south'
-        pos = contents.find(keyword)+len(keyword)+3
-        contents = insert(contents, new, pos)
-    elif filename == 'urls.py':
-        contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
-    elif filename == 'views.py':
-        contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
-    return contents
+from extra_settings import *
 
 def copy_files(folder_path, file_types, pathify):
     """Copies the contents of django_files and server_scripts, and
@@ -193,12 +152,15 @@ def copy_files(folder_path, file_types, pathify):
             f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
             new_contents = contents % replacement_values
 
+            # Justifies the spacing for comments in README.md
+            if new_filename == "README.md":
+                new_contents = justify(new_contents)
             # Appends certain attributes to some django files for Django Debug Toolbar
             if arguments.debug and new_filename in debugify_files:
                 new_contents = debugify(new_contents, new_filename)
             # Appends certain attributes to some django files for Jinja2
             if arguments.jinja2 and new_filename in jinjaify_files:
-                new_contents = jinjaify(new_contents, new_filename)
+                new_contents = jinjaify(new_contents, new_filename, replacement_values)
 
             f_write.write(new_contents)
             f_write.close()
@@ -254,6 +216,7 @@ PROJECT_PASSWORD = ''.join([ random.choice(string.printable[:62])
 #   'my_project_name'
 replacement_values = {
     'PROJECT_NAME':     PROJECT_NAME,
+    'PROJECT_NAME_CAP': PROJECT_NAME.capitalize(),
     'APP_NAME':         APP_NAME,
     'PROJECT_PASSWORD': PROJECT_PASSWORD,
     'BASE_PATH':        BASE_PATH,
@@ -357,13 +320,13 @@ output = sh(cmd)
 if not arguments.quiet:
     print '\n', output, '\n'
 
-# HACK - Installing Coffin via github clone because the pypi
+# HACK - Installing Coffin via github clone because the PyPI
 # version is outdated at v0.3.6 while the git repo is at v0.3.7-dev
 # http://pypi.python.org/pypi/Coffin (v0.3.6 -- 9/9/2011)
 # https://github.com/coffin/coffin (v0.3.7-dev -- 7/16/2012)
 if arguments.jinja2:
     print "Installing Coffin manually via git clone and setup.py"
-    print "Pypi coffin is outdated at v0.3.6, Git repo is at v0.3.7-dev"
+    print "PyPI coffin is outdated at v0.3.6, Git repo is at v0.3.7-dev"
     cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
     cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
     cmd += ' git clone https://github.com/coffin/coffin.git &&'
@@ -380,7 +343,7 @@ if not arguments.quiet:
     print "Creating git repo..."
 
 cmd  = 'bash -c "cd %s &&' % PROJECT_PATH
-cmd += ' git add . && git commit -m \'First commit\'"'
+cmd += ' git add . && git commit -m \'first commit\'"'
 output = sh(cmd)
 
 if not arguments.quiet:
