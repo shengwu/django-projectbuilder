@@ -152,15 +152,15 @@ def copy_files(folder_path, file_types, pathify):
             f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
             new_contents = contents % replacement_values
 
-            # Justifies the spacing for comments in README.md
-            if new_filename == "README.md":
-                new_contents = justify(new_contents)
             # Appends certain attributes to some django files for Django Debug Toolbar
             if arguments.debug and new_filename in debugify_files:
                 new_contents = debugify(new_contents, new_filename)
             # Appends certain attributes to some django files for Jinja2
             if arguments.jinja2 and new_filename in jinjaify_files:
                 new_contents = jinjaify(new_contents, new_filename, replacement_values)
+            # Justifies the spacing for comments in README.md
+            if new_filename == "README.md":
+                new_contents = justify(new_contents)
 
             f_write.write(new_contents)
             f_write.close()
@@ -264,7 +264,6 @@ if not arguments.quiet:
 # Add directory names here
 generic_dirs = ['media', 'templates']
 generic_dirs = [DPB_PATH + d for d in generic_dirs]
-template_needs_replacements = ['500.html']
 
 for dirname in generic_dirs:
     # cp -r media-generic $PROJECT_PATH/media && cp -r templates-generic ...
@@ -275,6 +274,8 @@ for dirname in generic_dirs:
         shutil.copytree(dirname + '-foundation', new_dir)
     else:
         shutil.copytree(dirname + '-generic', new_dir)
+
+template_needs_replacements = ['500.html']
 
 # Replace %(VARIABLES)s with right values for templates
 # Loop through list of templates that should be replaced
@@ -313,29 +314,12 @@ if not arguments.quiet:
 # FIXME Shouldn't assume the location of virtualenvwrapper.sh
 cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
 cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
-cmd += ' pip install -r requirements.txt"'
+cmd += ' pip install -r requirements.txt && pip freeze > requirements.txt"'
 
 output = sh(cmd)
 
 if not arguments.quiet:
     print '\n', output, '\n'
-
-# HACK - Installing Coffin via github clone because the PyPI
-# version is outdated at v0.3.6 while the git repo is at v0.3.7-dev
-# http://pypi.python.org/pypi/Coffin (v0.3.6 -- 9/9/2011)
-# https://github.com/coffin/coffin (v0.3.7-dev -- 7/16/2012)
-if arguments.jinja2:
-    print "Installing Coffin manually via git clone and setup.py"
-    print "PyPI coffin is outdated at v0.3.6, Git repo is at v0.3.7-dev"
-    cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
-    cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
-    cmd += ' git clone https://github.com/coffin/coffin.git &&'
-    cmd += ' cd coffin && python setup.py install &&'
-    cmd += ' cd .. && rm -rf coffin && pip freeze > requirements.txt"'
-
-    output = sh(cmd)
-    if not arguments.quiet:
-        print '\n', output, '\n'
 
 # virtualenv now exists
 
