@@ -18,9 +18,21 @@ else
          # Proceed if user is currently in the top level directory of the project
         if [ -s "manage.py" ]; then
 
-            # Prompts user for a name of the heroku app
-            echo "Starting Initial Heroku Deploy!"
             echo
+            echo "    *** Starting Initial Heroku Deploy! ***"
+            echo
+            echo "      　　　　 /｀》,-―‐‐＜｀}           "
+            echo "      　　 　./::/≠´::::;::ヽ.           "
+            echo "      　 　　/::〃::::／}::丿ハ          "
+            echo "      　 　./:::i{::／  ﾉ／}::}          "
+            echo "      　　 /::::瓜イ＞ ´＜,':ﾉ           "
+            echo "      　 ./::::ﾉ ﾍ{､ ( ﾌ_ノイ            "
+            echo "      　 |::::|  ／} ｽ/￣￣￣￣/         "
+            echo "       　|::::| (::つ/ Heroku / Deploy!  "
+            echo "    ￣￣￣￣￣￣￣＼/＿＿＿＿/￣￣￣￣   "
+            echo
+
+            # Prompts user for a name of the heroku app
             read -p "    # What will you name the new Heroku app? (leave blank for random name) "
             HEROKU_NAME=$REPLY
 
@@ -74,7 +86,6 @@ else
             echo
             heroku open
 
-            echo
             echo "[COMPLETE] Heroku app deployed and synced!"
             echo
             echo "    # Make sure you also:"
@@ -87,7 +98,6 @@ else
         fi
 
     else
-        echo "Make sure to run 'workon PROJECT_NAME'"
-
+        echo "Make sure you're in the project's virtualenv, run 'workon PROJECT_NAME'"
     fi
 fi
