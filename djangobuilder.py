@@ -284,7 +284,7 @@ for dirname in generic_dirs:
     else:
         shutil.copytree(dirname + '-generic', new_dir)
 
-template_needs_replacements = ['500.html']
+template_needs_replacements = ['base.html', '500.html']
 
 # Replace %(VARIABLES)s with right values for templates
 # Loop through list of templates that should be replaced

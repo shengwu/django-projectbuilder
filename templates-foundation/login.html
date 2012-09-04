@@ -2,18 +2,16 @@
 {% block title %}Log In{% endblock %}
 {% block content %}
 
-<div class="row">
-    <div class="five columns centered" id="login">
-        <h2>Welcome</h2>
+<div class="five columns centered" id="login">
+    <h2>Welcome</h2>
 
-        <form action="{% url login %}" method="post">{% csrf_token %}
+    <form action="{% url login %}" method="post">{% csrf_token %}
 
-            {{ form.as_ul }}
-            <input class="success button" type="submit" value="Log In" />
+        {{ form.as_ul }}
+        <input class="success button" type="submit" value="Log In" />
 
-        </form>
+    </form>
 
-    </div>
 </div>
 
 {% endblock %}

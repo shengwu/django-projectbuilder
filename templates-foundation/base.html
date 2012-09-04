@@ -11,7 +11,6 @@
 
     <title>{% block title %}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{% endblock %}" />
-    <meta name="author" content="{% block meta_author %}{% endblock %}" />
     {# TODO: <link rel="shortcut icon" href="/media/images/favicon.ico" /> #}
 
     <!-- Apple Meta Data -->
@@ -61,22 +60,31 @@
     {# Content #}
     <div class="row">
         <div class="twelve columns">
-            <header id="banner">
+
+            <header class="row">
+                <div class="twelve columns">
+                    <a href="{% url index %}" id="headerlogo">
+                        <h1>%(PROJECT_NAME_CAP)s</h1>
+                    </a>
+                    <hr/>
+                    
+                </div>
             </header>
         
-            <div class="main" role="main">
+            <div id="main" class="row">
                 <!-- PROMPT IE 6 USERS TO INSTALL CHROME FRAME. REMOVE THIS IF YOU SUPPORT IE 6.
                 chromium.org/developers/how-tos/chrome-frame-getting-started -->
                 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
-                <!--Block Content -->
+                <!-- Main Content -->
                 {% block content %}{% endblock %}
                 <!-- End Block -->
             
             </div>
         
-            <footer class="footer">
+            <footer class="row">
             </footer>
+
         </div>
     </div>
     {# End Content #}
