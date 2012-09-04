@@ -72,6 +72,7 @@ def jinjaify(contents, filename, replacement_values=None):
         contents = insert(contents, new, pos)
     elif filename == 'urls.py' or filename == 'appurls.py':
         contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
+        contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
     elif filename == 'views.py':
         contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
     elif filename == 'README.md':
