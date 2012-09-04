@@ -76,7 +76,8 @@ using all Bootstrap defaults for the front-end.
     python djangobuilder.py --path ~/new_project --bootstrap
 
 If you add the optional `--foundation` argument, your project will be created
-using all Foundation 3 defaults for the front-end.
+using all Foundation 3 defaults for the front-end including [Responsive Tables](http://www.zurb.com/playground/responsive-tables)
+and the [Foundation Icons](http://www.zurb.com/playground/foundation-icons)
 
     python djangobuilder.py --path ~/new_project --foundation
 

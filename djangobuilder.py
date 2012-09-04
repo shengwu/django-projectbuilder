@@ -125,7 +125,6 @@ if arguments.imkevinxu:
     arguments.foundation = True
     arguments.bcrypt = True
     arguments.debug = True
-    arguments.jinja2 = True
 
 def check_projectname():
     if not re.search(r'^[_a-zA-Z]\w*$', PROJECT_NAME):
