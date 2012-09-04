@@ -80,7 +80,7 @@ DJANGO_FILES_PATH = DPB_PATH + 'django-files/'
 parser = argparse.ArgumentParser(description='''PTM Web Engineering presents
                                  Django Project Builder''')
 
-# Arg to declare the path to where the project will be made
+# Simple arguments
 parser.add_argument('--version', '-v', action='version',
                     version='Django Project Builder v0.1')
 parser.add_argument('--path', action='store', dest='path',
@@ -88,26 +88,29 @@ parser.add_argument('--path', action='store', dest='path',
                     should be made, including the project name at the
                     end (e.g. /home/username/code/project_name)''',
                     required=True)
-# Arg for using bootstrap rather than generic templates/media
-parser.add_argument('--bootstrap', action='store_true', default=False,
-                    help='''This will include Bootstrap as the template
-                    and media base of the project.''', dest='bootstrap')
-# Arg for using foundation rather than generic templates/media
-parser.add_argument('--foundation', action='store_true', default=False,
-                    help='''This will include Foundation 3 as the template
-                    and media base of the project.''', dest='foundation')
-# Arg for adding Django Debug Toolbar
-parser.add_argument('--debug', action='store_true', default=False,
-                    help='''This will install the Django Debug Toolbar
-                    package for the project.''', dest='debug')
-# Arg for using Jinja2 with Coffin support as default templating engine
-parser.add_argument('--jinja2', action='store_true', default=False,
-                    help='''This will install Jinja2 and Coffin as the default
-                    templating engine of the project.''', dest='jinja2')
-# Simple ones
 parser.add_argument('-q', '--quiet', action='store_true', default=False,
                     help='''Quiets all output except the finish message.''',
                     dest='quiet')
+
+# Theme arguments
+parser.add_argument('--bootstrap', action='store_true', default=False,
+                    help='''This will include Bootstrap as the template
+                    and media base of the project.''', dest='bootstrap')
+parser.add_argument('--foundation', action='store_true', default=False,
+                    help='''This will include Foundation 3 as the template
+                    and media base of the project.''', dest='foundation')
+
+# Extra Packages
+parser.add_argument('--bcrypt', action='store_true', default=False,
+                    help='''This will install py-bcrypt and use bcrypt
+                    as the main password hashing for the project.''', dest='bcrypt')
+parser.add_argument('--debug', action='store_true', default=False,
+                    help='''This will install the Django Debug Toolbar
+                    package for the project.''', dest='debug')
+parser.add_argument('--jinja2', action='store_true', default=False,
+                    help='''This will install Jinja2 and Coffin as the default
+                    templating engine of the project.''', dest='jinja2')
+
 
 # SUPER Argument for imkevinxu
 parser.add_argument('--imkevinxu', action='store_true', default=False,
@@ -116,10 +119,13 @@ parser.add_argument('--imkevinxu', action='store_true', default=False,
                     dest='imkevinxu')
 
 arguments = parser.parse_args()
+
+# All arguments that imkevinxu enables
 if arguments.imkevinxu:
     arguments.foundation = True
-    arguments.jinja2 = True
+    arguments.bcrypt = True
     arguments.debug = True
+    arguments.jinja2 = True
 
 def check_projectname():
     if not re.search(r'^[_a-zA-Z]\w*$', PROJECT_NAME):
@@ -152,13 +158,16 @@ def copy_files(folder_path, file_types, pathify):
             f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
             new_contents = contents % replacement_values
 
-            # Appends certain attributes to some django files for Django Debug Toolbar
+            # Appends certain attributes and settings to some django files for
+            # various extra packages according to the arguments
+            if arguments.bcrypt and new_filename in bcryptify_files:
+                new_contents = bcryptify(new_contents, new_filename)
             if arguments.debug and new_filename in debugify_files:
                 new_contents = debugify(new_contents, new_filename)
-            # Appends certain attributes to some django files for Jinja2
             if arguments.jinja2 and new_filename in jinjaify_files:
                 new_contents = jinjaify(new_contents, new_filename, replacement_values)
-            # Justifies the spacing for comments in README.md
+
+            # Justifies the spacing for comments in code in README.md
             if new_filename == "README.md":
                 new_contents = justify(new_contents)
 

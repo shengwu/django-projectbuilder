@@ -52,7 +52,7 @@ for what's on the horizon, and for what you may want to help out with.
 
 If you're on a Mac (only been tested with OSX 10.7 Lion so far) and are missing
 some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
-then `cd` into django-projectbuilder repo and run
+then `cd` into the django-projectbuilder repo and run
 
     bash install_dependencies.sh
 
@@ -65,7 +65,10 @@ something like
 
 to create the `~/new_project_site` directory, which contains _tons_ of
 Django boilerplate -- common imports, virtualenv creation, a new git
-repo, and more!
+repo, and more! `virtualenv` and `virtualenvwrapper` are required. `git` is
+recommended. Django is awesome.
+
+### Themes
 
 If you add the optional `--bootstrap` argument, your project will be created
 using all Bootstrap defaults for the front-end.
@@ -77,10 +80,12 @@ using all Foundation 3 defaults for the front-end.
 
     python djangobuilder.py --path ~/new_project --foundation
 
-`virtualenv` and `virtualenvwrapper` are required. `git` is
-recommended. Django is awesome.
-
 ### Extra packages
+
+If you add the optional `--bcrypt` argument, your project will be created
+using bcrypt as the default password hashing
+
+    python djangobuilder.py --path ~/new_project --bcrypt
 
 If you add the optional `--debug` argument, your project will be created
 with the super handy Django Debug Toolbar
@@ -88,7 +93,7 @@ with the super handy Django Debug Toolbar
     python djangobuilder.py --path ~/new_project --debug
 
 If you add the optional `--jinja2` argument, your project will be created
-using Jinja2 as the default Templating engine using Coffin as the adapter
+using Jinja2 as the default Templating engine with Coffin as the adapter
 
     python djangobuilder.py --path ~/new_project --jinja2
 
@@ -103,9 +108,6 @@ to create the top-level project directory, bare git repo, and empty
 ${PROJECT_NAME}_site directory for the soon-to-exist Django project.
 Follow the instructions echoed to the screen, which include using
 `apachebuilder.sh` to generate your project's Apache config.
-
-Enjoy!
-
 
 ## Troubleshooting
 
@@ -158,13 +160,13 @@ redeploy with
 
 Also in order for the app to know Heroku is a production server, this line of code
 will add a heroku config variable for 'PRODUCTION' so settings configure accordingly
-to os.environ
+in os.environ
     
     heroku config:add PRODUCTION=true
 
 See
 [Getting Started with Django on Heroku/Cedar](https://devcenter.heroku.com/articles/django)
-with more on deploying to Heroku.
+for more on deploying to Heroku.
 
 ### Auto Initial Heroku Deploy
 
