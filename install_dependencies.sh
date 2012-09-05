@@ -36,7 +36,7 @@ if [ ! -d "$WORKON_HOME" ]
     then
         echo "Adding virtualenvwrapper variables to ~/.bash_profile"
         echo source `which virtualenvwrapper.sh` >> ~/.bash_profile
-        source ~/.bash_profile
+        source `which virtualenvwrapper.sh`
 fi
 
 # Fixes problem that occurs on OSX 10.7 Lion when making a new virtualenv,
@@ -47,8 +47,12 @@ sudo touch /System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.
 # Detects if the user has git installed and prompts them to install it if not
 if [ -z `which git` ]
     then
-        echo "Detected git has not been installed"
+        echo
+        echo "[WARNING] Detected git has not been installed"
         echo "INSTALL git here http://git-scm.com/downloads"
 fi
 
-echo "All dependencies installed!"
+echo
+echo "    ヽ(^o^)丿  yaaaaaaaay"
+echo
+echo "    All dependencies installed!"

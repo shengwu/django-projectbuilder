@@ -6,7 +6,7 @@ PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir
 DEBUG = False
 if os.environ.get('DEBUG') in ['True', 'False']:
     DEBUG = os.environ.get('DEBUG') == 'True'
-    
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (

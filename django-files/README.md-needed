@@ -38,6 +38,6 @@ In case something's not working after pulling, try one of these:
 If you are missing some dependencies like `pip`, `django`, `virtualenv`, or`virtualenvwrapper`
 then try downloading and running this [script](https://github.com/imkevinxu/django-projectbuilder/blob/master/install_dependencies.sh) or run this line of code:
 
-    curl https://raw.github.com/imkevinxu/django-projectbuilder/master/install_dependencies.sh | bash
+    curl -O https://raw.github.com/imkevinxu/django-projectbuilder/master/install_dependencies.sh && source install_dependencies.sh && rm -f install_dependencies.sh
 
 Only been tested with Mac OSX 10.7 Lion so far.

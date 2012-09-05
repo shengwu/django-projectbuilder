@@ -42,7 +42,7 @@ If you're on a Mac (only been tested with OSX 10.7 Lion so far) and are missing
 some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
 then `cd` into the django-projectbuilder repo and run
 
-    bash install_dependencies.sh
+    source install_dependencies.sh
 
 ### Local Development Usage
 
@@ -130,7 +130,7 @@ Create your new Heroku server with
 In order for the app to know Heroku is a production server, this line of code
 will add a heroku config variable for `PRODUCTION` so settings configure accordingly
 with os.environ.get()
-    
+
     heroku config:add PRODUCTION=True
 
 and adding this config variable will make it easier to turn `DEBUG` on without redeploying
@@ -160,7 +160,7 @@ for more on deploying to Heroku.
 To automate the above steps for your initial Heroku deploy,
 `cd` into django-projectbuilder repo and run
 
-    bash initial_heroku_deploy.sh
+    source initial_heroku_deploy.sh
 
 
 ## Troubleshooting
