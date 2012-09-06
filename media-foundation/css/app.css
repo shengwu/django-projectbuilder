@@ -11,27 +11,6 @@
 .inline_block { display: inline-block; }
 
 /* -----------------------------------------
-   BASE Styles
------------------------------------------ */
-
-header h1 {
-    display: inline-block;
-    font-weight: 500;
-}
-
-header #right_nav {
-    position: absolute;
-    right: 15px;
-    top: 25px;
-}
-
-header #right_nav i {
-    position: relative;
-    padding-right: 4px;
-    top: 1px;
-}
-
-/* -----------------------------------------
    LOGIN Styles
 ----------------------------------------- */
 
@@ -61,6 +40,27 @@ header #right_nav i {
     margin-top: 10px;
     margin-left: 50%;
     left: -60px;
+}
+
+/* -----------------------------------------
+   BASE Styles
+----------------------------------------- */
+
+header h1 {
+    display: inline-block;
+    font-weight: 500;
+}
+
+header #right_nav {
+    position: absolute;
+    right: 15px;
+    top: 25px;
+}
+
+header #right_nav i {
+    position: relative;
+    padding-right: 4px;
+    top: 1px;
 }
 
 
