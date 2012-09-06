@@ -206,8 +206,8 @@ APP_NAME     = PROJECT_NAME + '_app'
 BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
 
 # ADMIN INFORMATION
-ADMIN_NAME   = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else ''
-ADMIN_EMAIL  = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else ''
+ADMIN_NAME   = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else 'Agent Smith'
+ADMIN_EMAIL  = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else 'admin@example.com'
 
 # TODO
 # vewrapper = pbs.which('virtualenvwrapper.sh')

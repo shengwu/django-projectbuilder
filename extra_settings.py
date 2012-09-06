@@ -76,7 +76,7 @@ def jinjaify(contents, filename, replacement_values=None):
     elif filename == 'views.py':
         contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
     elif filename == 'README.md':
-        new = "    pip install https://github.com/coffin/coffin/zipball/master #Coffin v0.3.7-dev must be manually installed\n"
+        new = "    pip install https://github.com/coffin/coffin/zipball/master # Coffin v0.3.7-dev must be manually installed\n"
         keyword = 'virtual environment'
         pos = contents.find(keyword)+len(keyword)+2
         contents = insert(contents, new, pos)
