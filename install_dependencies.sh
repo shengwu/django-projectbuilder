@@ -5,11 +5,18 @@
 # Basic script to install all the dependencies for Django Project Builder
 # Tested on a Mac OSX 10.7 Lion
 
+PYTHON_VERSION=`python -c 'import sys; print(".".join(map(str, sys.version_info[:3])))'`
+
 # Installing pip, django, virtualenv, virtualenvwrapper
 if [ -z `which pip` ]
     then
         echo "Installing pip..."
         sudo easy_install pip
+
+        # Installs Distribute http://pypi.python.org/pypi/distribute
+        curl -O http://python-distribute.org/distribute_setup.py
+        sudo python distribute_setup.py
+        rm -f distribute*
 fi
 
 if [ -z `which django-admin.py` ]
@@ -42,7 +49,10 @@ fi
 # Fixes problem that occurs on OSX 10.7 Lion when making a new virtualenv,
 # it goes looking for disutils but crashes if it can't find one
 # http://stackoverflow.com/questions/3129852/python-cant-locate-distutils-path-on-mac-osx
-sudo touch /System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/distutils/__init__.py
+if [ `echo $PYTHON_VERSION | grep -c "2.7" ` -gt 0 ]
+    then
+        sudo touch /System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/distutils/__init__.py
+fi
 
 # Detects if the user has git installed and prompts them to install it if not
 if [ -z `which git` ]

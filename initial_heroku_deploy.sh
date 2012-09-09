@@ -60,7 +60,7 @@ if [ ! -d $1 ]; then
 fi
 
 # Detects if the user has heroku installed and prompts them to install it if not
-if [ -z `which heroku` ]; then  
+if [ -z `which heroku` ]; then
     echo "[MISSING HEROKU] Detected Heroku has not been installed"
     echo "  INSTALL Heroku here https://devcenter.heroku.com/articles/quickstart"
     exit 0
