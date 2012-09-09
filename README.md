@@ -158,9 +158,9 @@ for more on deploying to Heroku.
 ### Auto Initial Heroku Deploy
 
 To automate the above steps for your initial Heroku deploy,
-`cd` into django-projectbuilder repo and run
+`cd` into your project folder and run
 
-    source initial_heroku_deploy.sh
+    source path/to/django-projectbuilder/initial_heroku_deploy.sh
 
 
 ## Troubleshooting

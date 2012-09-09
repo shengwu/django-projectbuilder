@@ -106,14 +106,15 @@ echo "    ￣￣￣￣￣￣￣＼/＿＿＿＿/￣￣￣￣   "
 echo
 
 # Prompts user for a name of the heroku app
-read -p "    What will you name the new Heroku app? (leave blank for random name) "
+read -p "    What will you name the new Heroku app? (single word lowercase. leave blank for random name) "
 HEROKU_NAME=$REPLY
 
 echo
 echo "[START] Preparing the project for Heroku deployment....."
 
 # Installs psycopg2 and dj-database-url and updates requirements.txt
-pip install psycopg2 dj-database-url
+env ARCHFLAGS="-arch i386 -arch x86_64" pip install psycopg2
+pip install dj-database-url
 pip freeze > requirements.txt
 
 # Updates settings.py with proper heroku database setting
