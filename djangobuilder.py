@@ -20,8 +20,11 @@ import sys
 
 from subprocess import Popen, call, STDOUT, PIPE
 
+
 def which(program):
+
     import os
+
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
@@ -126,18 +129,20 @@ if arguments.imkevinxu:
     arguments.bcrypt = True
     arguments.debug = True
 
+
 def check_projectname():
     if not re.search(r'^[_a-zA-Z]\w*$', PROJECT_NAME):
-        message = 'Error: \'%s\' is not a valid project name. Please ' %  PROJECT_NAME
+        message = 'Error: \'%s\' is not a valid project name. Please ' % PROJECT_NAME
         if not re.search(r'^[_a-zA-Z]', PROJECT_NAME):
             message += ('make sure the name begins '
-                       'with a letter or underscore.')
+                        'with a letter or underscore.')
         else:
             message += 'use only numbers, letters and underscores.'
 
         sys.exit(message)
 
 from extra_settings import *
+
 
 def copy_files(folder_path, file_types, pathify):
     """Copies the contents of django_files and server_scripts, and
@@ -173,8 +178,9 @@ def copy_files(folder_path, file_types, pathify):
             f_write.write(new_contents)
             f_write.close()
 
+
 def sh(cmd):
-    return Popen(cmd,shell=True,stdout=PIPE,stderr=PIPE).communicate()[0]
+    return Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE).communicate()[0]
 
 # Maps cleaned filenames to where each file should be copied relative
 # to PROJECT_PATH
@@ -201,22 +207,22 @@ django_pathify = {
 
 # Trailing / may be included or excluded up to this point
 PROJECT_PATH = arguments.path.rstrip('/') + '/'
-PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0] # Before the '/'
+PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0]  # Before the '/'
 APP_NAME     = PROJECT_NAME + '_app'
 BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
 
 # ADMIN INFORMATION
-ADMIN_NAME   = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else 'Agent Smith'
-ADMIN_EMAIL  = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else 'admin@example.com'
+ADMIN_NAME  = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else 'Agent Smith'
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else 'admin@example.com'
 
 # TODO
 # vewrapper = pbs.which('virtualenvwrapper.sh')
 # vewrapper("")
 
-SECRET_KEY = ''.join([ random.choice(string.printable[:94].replace("'", ""))
-                       for _ in range(50) ])
-PROJECT_PASSWORD = ''.join([ random.choice(string.printable[:62])
-                             for _ in range(30) ])
+SECRET_KEY = ''.join([random.choice(string.printable[:94].replace("'", ""))
+                      for _ in range(50)])
+PROJECT_PASSWORD = ''.join([random.choice(string.printable[:62])
+                            for _ in range(30)])
 
 # Defines key: value pairs so that
 #   '%(PROJECT_NAME)s' % replacement_values
@@ -295,7 +301,7 @@ for template in template_needs_replacements:
 
     f_write = open(templates_dir + template, 'w')
     for key, value in replacement_values.items():
-        contents = contents.replace('%('+key+')s', value)
+        contents = contents.replace('%(' + key + ')s', value)
     f_write.write(contents)
     f_write.close()
 

@@ -8,7 +8,9 @@
 .fr { float: right; }
 .clear { clear: both; }
 .block { display: block; }
+.hidden { display: none; }
 .inline_block { display: inline-block; }
+.error { color: #c60f13; }
 
 /* -----------------------------------------
    LOGIN Styles
