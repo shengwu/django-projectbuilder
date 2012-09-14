@@ -67,7 +67,7 @@ if [ -z `which heroku` ]; then
 fi
 
 # Proceed if user is working in a virtualenv
-if [ ! -d "$VIRTUAL_ENV" ]; then
+if [ -z "$VIRTUAL_ENV" ]; then
     echo "[MISSING VIRTUALEV] Not currently working in the project's virtualenv"
     echo "  run 'workon PROJECT_NAME'"
     exit 0
@@ -89,6 +89,12 @@ if [ $branch_name != "master" ]; then
     exit 0
 fi
 
+# Proceed if master branch is clean
+if ! git diff-index --quiet HEAD --; then
+    echo "[UNCOMMITTED CHANGES] Detected changes that have not been committed"
+    echo "  Please commit your changes before deploying to Heroku"
+    exit 0
+fi
 
 # Begin Deployment Script
 echo
@@ -113,7 +119,7 @@ echo
 echo "[START] Preparing the project for Heroku deployment....."
 
 # Installs psycopg2 and dj-database-url and updates requirements.txt
-env ARCHFLAGS="-arch i386 -arch x86_64" pip install psycopg2
+pip install psycopg2
 pip install dj-database-url
 pip freeze > requirements.txt
 

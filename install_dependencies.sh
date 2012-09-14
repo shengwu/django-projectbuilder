@@ -7,17 +7,23 @@
 
 PYTHON_VERSION=`python -c 'import sys; print(".".join(map(str, sys.version_info[:3])))'`
 
-# Installing pip, django, virtualenv, virtualenvwrapper
+# Adds GCC ARCHFLAGS if none detected
+if [ -z "$ARCHFLAGS" ]
+    then
+        echo "export ARCHFLAGS='-arch i386 -arch x86_64'" >> ~/.bash_profile
+fi
+
+# Installing pip, distribute, django, virtualenv, virtualenvwrapper
 if [ -z `which pip` ]
     then
         echo "Installing pip..."
         sudo easy_install pip
-
-        # Installs Distribute http://pypi.python.org/pypi/distribute
-        curl -O http://python-distribute.org/distribute_setup.py
-        sudo python distribute_setup.py
-        rm -f distribute*
 fi
+
+# Installs Distribute http://pypi.python.org/pypi/distribute
+curl -O http://python-distribute.org/distribute_setup.py
+sudo python distribute_setup.py
+rm -f distribute*
 
 if [ -z `which django-admin.py` ]
     then
@@ -39,7 +45,7 @@ fi
 
 # Adds lines to the shell startup file so that virtualenvwrapper can work
 # http://virtualenvwrapper.readthedocs.org/en/latest/install.html#shell-startup-file
-if [ ! -d "$WORKON_HOME" ]
+if [ -z "$WORKON_HOME" ]
     then
         echo "Adding virtualenvwrapper variables to ~/.bash_profile"
         echo source `which virtualenvwrapper.sh` >> ~/.bash_profile

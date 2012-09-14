@@ -160,7 +160,7 @@ for more on deploying to Heroku.
 To automate the above steps for your initial Heroku deploy,
 `cd` into your project folder and run
 
-    source path/to/django-projectbuilder/initial_heroku_deploy.sh
+    bash path/to/django-projectbuilder/initial_heroku_deploy.sh
 
 
 ## Troubleshooting
