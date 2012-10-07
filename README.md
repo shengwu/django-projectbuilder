@@ -84,6 +84,8 @@ with the super handy Django Debug Toolbar
 If you add the optional `--jinja2` argument, your project will be created
 using Jinja2 as the default Templating engine with Coffin as the adapter
 
+Warning: login.html is still using Django templating engine because of the Django auth module
+
     python djangobuilder.py --path ~/new_project --jinja2
 
 

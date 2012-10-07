@@ -114,11 +114,10 @@ parser.add_argument('--jinja2', action='store_true', default=False,
                     help='''This will install Jinja2 and Coffin as the default
                     templating engine of the project.''', dest='jinja2')
 
-
 # SUPER Argument for imkevinxu
 parser.add_argument('--imkevinxu', action='store_true', default=False,
                     help='''Super argument with default packages for imkevinxu
-                    including Foundation, Jinja2, and Debug Toolbar.''',
+                    including Foundation and Debug Toolbar.''',
                     dest='imkevinxu')
 
 arguments = parser.parse_args()
@@ -169,7 +168,7 @@ def copy_files(folder_path, file_types, pathify):
             if arguments.debug and new_filename in debugify_files:
                 new_contents = debugify(new_contents, new_filename)
             if arguments.jinja2 and new_filename in jinjaify_files:
-                new_contents = jinjaify(new_contents, new_filename, replacement_values)
+                new_contents = jinjaify(new_contents, new_filename) % replacement_values
 
             # Justifies the spacing for comments in code in README.md
             if new_filename == "README.md":
@@ -204,6 +203,9 @@ django_pathify = {
     'views.py':                     ['%(APP_NAME)s/'],
     'wsgi.py':                      ['%(PROJECT_NAME)s/'],
 }
+
+if arguments.jinja2:
+    django_pathify['jinja2.py'] = ['%(PROJECT_NAME)s/']
 
 # Trailing / may be included or excluded up to this point
 PROJECT_PATH = arguments.path.rstrip('/') + '/'
@@ -289,7 +291,7 @@ for dirname in generic_dirs:
     else:
         shutil.copytree(dirname + '-generic', new_dir)
 
-template_needs_replacements = ['base.html', '500.html']
+template_needs_replacements = ['base.html', 'index.html', 'template.html', 'login.html', '500.html']
 
 # Replace %(VARIABLES)s with right values for templates
 # Loop through list of templates that should be replaced
@@ -302,6 +304,10 @@ for template in template_needs_replacements:
     f_write = open(templates_dir + template, 'w')
     for key, value in replacement_values.items():
         contents = contents.replace('%(' + key + ')s', value)
+
+    if arguments.foundation and arguments.jinja2 and template in jinjaify_template_files:
+        contents = jinjaify_templates(contents, template)
+
     f_write.write(contents)
     f_write.close()
 

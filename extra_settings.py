@@ -60,34 +60,45 @@ def debugify(contents, filename):
 
 # Files and function to add the right settings to enable Jinja2 as the default
 # templating engine using Coffin as an adapter
-jinjaify_files = ['requirements.txt', 'settings.py', 'urls.py', 'appurls.py', 'views.py', 'README.md']
-def jinjaify(contents, filename, replacement_values=None):
+jinjaify_files = ['requirements.txt', 'settings.py', 'views.py', 'urls.py', 'appurls.py']
+def jinjaify(contents, filename):
     if filename == 'requirements.txt':
         contents += '\nJinja2==2.6'
-        contents += '\nhttps://github.com/coffin/coffin/zipball/master'
+        contents += '\nCoffin==0.3.7'
     elif filename == 'settings.py':
         new = "    'coffin',\n"
         keyword = 'south'
         pos = contents.find(keyword)+len(keyword)+3
         contents = insert(contents, new, pos)
-    elif filename == 'urls.py' or filename == 'appurls.py':
-        contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
-        contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
     elif filename == 'views.py':
         contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
-    elif filename == 'README.md':
-        new = "    pip install https://github.com/coffin/coffin/zipball/master # Coffin v0.3.7-dev must be manually installed\n"
-        keyword = 'virtual environment'
+    elif filename == 'urls.py':
+        contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
+    elif filename == 'appurls.py':
+        contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
+        contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
+        contents = contents.replace('login, logout', 'logout')
+
+        keyword = 'logout'
         pos = contents.find(keyword)+len(keyword)+2
+        new = 'from %(PROJECT_NAME)s.jinja2 import login\n\n'
         contents = insert(contents, new, pos)
 
-        new  = "\n\n### Coffin/Jinja2 Module Errors\n\n"
-        new += "Either you're missing [Coffin](https://github.com/coffin/coffin) or \
-have an outdated version from [PyPI](http://pypi.python.org/pypi/Coffin). \
-PyPI currently hosts v0.3.6 but this Django project needs v0.3.7-dev from \
-the Github repo.\n\n"
-        new += "Please run this code while working in the `%(PROJECT_NAME)s` virtual environment:\n\n" % replacement_values
-        new += "    pip install https://github.com/coffin/coffin/zipball/master"
-        contents += new
+    return contents
+
+# Files and function to edit certain template tags in the templates to work with Jinja2
+jinjaify_template_files = ['base.html', 'index.html', 'template.html', 'login.html']
+def jinjaify_templates(contents, filename):
+    contents = contents.replace('block.super', 'super()')
+    if filename =='index.html':
+        keyword = '</h5>'
+        pos = contents.find(keyword)+len(keyword)+2
+        new = '            {% set template = "<a href=\\"http://jinja.pocoo.org/docs/\\" target=\\"_blank\\">Jinja2</a> v2.6" %}\n'
+        new += '            <h5>You are using the {{ template|safe }} templating engine</h5>\n\n'
+        contents = insert(contents, new, pos)
+    elif filename == 'base.html':
+        contents = contents.replace('user.is_authenticated', 'user.is_authenticated()')
+    elif filename == 'login.html':
+        contents = contents.replace('form.as_ul', 'form.as_ul()|safe')
 
     return contents
