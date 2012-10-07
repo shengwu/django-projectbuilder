@@ -117,7 +117,7 @@ parser.add_argument('--jinja2', action='store_true', default=False,
 # SUPER Argument for imkevinxu
 parser.add_argument('--imkevinxu', action='store_true', default=False,
                     help='''Super argument with default packages for imkevinxu
-                    including Foundation and Debug Toolbar.''',
+                    including Foundation, Jinja2 and Debug Toolbar.''',
                     dest='imkevinxu')
 
 arguments = parser.parse_args()
@@ -125,6 +125,7 @@ arguments = parser.parse_args()
 # All arguments that imkevinxu enables
 if arguments.imkevinxu:
     arguments.foundation = True
+    arguments.jinja2 = True
     arguments.bcrypt = True
     arguments.debug = True
 
