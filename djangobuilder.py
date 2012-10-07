@@ -168,7 +168,9 @@ def copy_files(folder_path, file_types, pathify):
             if arguments.debug and new_filename in debugify_files:
                 new_contents = debugify(new_contents, new_filename)
             if arguments.jinja2 and new_filename in jinjaify_files:
-                new_contents = jinjaify(new_contents, new_filename) % replacement_values
+                new_contents = jinjaify(new_contents, new_filename)
+                if new_filename == 'appurls.py':
+                    new_contents = new_contents % replacement_values
 
             # Justifies the spacing for comments in code in README.md
             if new_filename == "README.md":
@@ -305,8 +307,13 @@ for template in template_needs_replacements:
     for key, value in replacement_values.items():
         contents = contents.replace('%(' + key + ')s', value)
 
-    if arguments.foundation and arguments.jinja2 and template in jinjaify_template_files:
-        contents = jinjaify_templates(contents, template)
+    if arguments.foundation:
+        if arguments.bcrypt and template in bcryptify_files:
+            contents = bcryptify(contents, template)
+        if arguments.debug and template in debugify_files:
+            contents = debugify(contents, template)
+        if arguments.jinja2 and template in jinjaify_template_files:
+            contents = jinjaify_templates(contents, template)
 
     f_write.write(contents)
     f_write.close()

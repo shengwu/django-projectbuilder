@@ -16,6 +16,10 @@ For best results, make sure you have at least:
 * Python 2.7.2
 * Django 1.4.1
 
+### Customizations
+
+* [South](http://south.readthedocs.org/en/0.7.6/index.html) database migration
+
 ### Installing the Application
 
     # after initial git clone of existing repo
@@ -44,4 +48,4 @@ then try downloading and running this [script](https://github.com/imkevinxu/djan
 
     curl -O https://raw.github.com/imkevinxu/django-projectbuilder/master/install_dependencies.sh && source install_dependencies.sh && rm -f install_dependencies.sh
 
-Script has only been tested with Mac OSX 10.7 Lion so far.
+Script has been tested with Mac OSX 10.7 (Lion) and 10.8 (Mountain Lion) so far.

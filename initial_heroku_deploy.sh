@@ -3,7 +3,7 @@
 # 2012.08.28
 #
 # Script for initial deploy to Heroku
-# Tested on Mac 10.7 Lion
+# Tested on Mac 10.7 (Lion) and 10.8 (Mountain Lion)
 #####################################
 
 # Script that undos the work of the initial heroku deployment littered with emoticans

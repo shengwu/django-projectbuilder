@@ -16,7 +16,7 @@ def insert(original, new, pos):
     return original[:pos] + new + original[pos:]
 
 # Files and function to add the right settings to enable bcrypt password hashing
-bcryptify_files = ['requirements.txt', 'settings.py']
+bcryptify_files = ['requirements.txt', 'settings.py', 'index.html', 'README.md']
 def bcryptify(contents, filename):
     if filename == 'requirements.txt':
         contents += '\npy-bcrypt==0.2'
@@ -32,10 +32,24 @@ def bcryptify(contents, filename):
         keyword = 'MIDDLEWARE_CLASSES'
         pos = contents.find(keyword)
         contents = insert(contents, new, pos)
+
+    elif filename == 'index.html':
+        keyword = '</h5>'
+        pos = contents.find(keyword)+len(keyword)+2
+        new = '            <li style="margin-left:35px"><h5>'
+        new += '<a href="https://docs.djangoproject.com/en/dev/topics/auth/#using-bcrypt-with-django" '
+        new += 'target="_blank">bcrypt</a> password hashing enabled</h5></li>\n\n'
+        contents = insert(contents, new, pos)
+    elif filename == 'README.md':
+        keyword = 'Customizations'
+        pos = contents.find(keyword)+len(keyword)+2
+        new = '* [bcrypt](https://docs.djangoproject.com/en/dev/topics/auth/#using-bcrypt-with-django) password hashing\n'
+        contents = insert(contents, new, pos)
+
     return contents
 
 # Files and function to add the right settings to enable Django Debug Toolbar
-debugify_files = ['requirements.txt', 'settings.py']
+debugify_files = ['requirements.txt', 'settings.py', 'index.html', 'README.md']
 def debugify(contents, filename):
     if filename == 'requirements.txt':
         contents += '\ndjango-debug-toolbar==0.9.4'
@@ -56,11 +70,25 @@ def debugify(contents, filename):
         new += "    'INTERCEPT_REDIRECTS' : False,\n"
         new += "}\n\n"
         contents = insert(contents, new, pos)
+
+    elif filename == 'index.html':
+        keyword = '</h5>'
+        pos = contents.find(keyword)+len(keyword)+2
+        new = '            <li style="margin-left:35px"><h5>'
+        new += '<a href="https://github.com/django-debug-toolbar/django-debug-toolbar" '
+        new += 'target="_blank">Django Debug Toolbar</a> enabled</h5></li>\n\n'
+        contents = insert(contents, new, pos)
+    elif filename == 'README.md':
+        keyword = 'Customizations'
+        pos = contents.find(keyword)+len(keyword)+2
+        new = '* [Django Debug Toolbar](https://github.com/django-debug-toolbar/django-debug-toolbar)\n'
+        contents = insert(contents, new, pos)
+
     return contents
 
 # Files and function to add the right settings to enable Jinja2 as the default
 # templating engine using Coffin as an adapter
-jinjaify_files = ['requirements.txt', 'settings.py', 'views.py', 'urls.py', 'appurls.py']
+jinjaify_files = ['requirements.txt', 'settings.py', 'views.py', 'urls.py', 'appurls.py', 'README.md']
 def jinjaify(contents, filename):
     if filename == 'requirements.txt':
         contents += '\nJinja2==2.6'
@@ -78,10 +106,15 @@ def jinjaify(contents, filename):
         contents = contents.replace('django.conf.urls.defaults', 'coffin.conf.urls.defaults')
         contents = contents.replace('django.shortcuts', 'coffin.shortcuts')
         contents = contents.replace('login, logout', 'logout')
-
         keyword = 'logout'
         pos = contents.find(keyword)+len(keyword)+2
         new = 'from %(PROJECT_NAME)s.jinja2 import login\n\n'
+        contents = insert(contents, new, pos)
+
+    elif filename == 'README.md':
+        keyword = 'Customizations'
+        pos = contents.find(keyword)+len(keyword)+2
+        new = '* [Jinja2](http://jinja.pocoo.org/docs/) templating with [Coffin](https://github.com/coffin/coffin)\n'
         contents = insert(contents, new, pos)
 
     return contents
@@ -90,11 +123,12 @@ def jinjaify(contents, filename):
 jinjaify_template_files = ['base.html', 'index.html', 'template.html', 'login.html']
 def jinjaify_templates(contents, filename):
     contents = contents.replace('block.super', 'super()')
-    if filename =='index.html':
+    if filename == 'index.html':
         keyword = '</h5>'
         pos = contents.find(keyword)+len(keyword)+2
         new = '            {% set template = "<a href=\\"http://jinja.pocoo.org/docs/\\" target=\\"_blank\\">Jinja2</a> v2.6" %}\n'
-        new += '            <h5>You are using the {{ template|safe }} templating engine</h5>\n\n'
+        new += '            <li style="margin-left:35px"><h5>{{ template|safe }} templating engine enabled with '
+        new += '<a href="https://github.com/coffin/coffin" target="_blank">Coffin</a></h5></li>\n\n'
         contents = insert(contents, new, pos)
     elif filename == 'base.html':
         contents = contents.replace('user.is_authenticated', 'user.is_authenticated()')

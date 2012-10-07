@@ -38,8 +38,8 @@ for what's on the horizon, and for what you may want to help out with.
 
 ### Installing Dependencies
 
-If you're on a Mac (only been tested with OSX 10.7 Lion so far) and are missing
-some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
+If you're on a Mac (only been tested with OSX 10.7 (Lion) and 10.8 (Mountain Lion) so far)
+and are missing some dependencies like `pip`, `django`, `virtualenv`, or `virtualenvwrapper`
 then `cd` into the django-projectbuilder repo and run
 
     source install_dependencies.sh

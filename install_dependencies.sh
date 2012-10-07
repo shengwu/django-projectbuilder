@@ -3,7 +3,7 @@
 # 2012.08.23
 
 # Basic script to install all the dependencies for Django Project Builder
-# Tested on a Mac OSX 10.7 Lion
+# Tested on a Mac OSX 10.7 (Lion) and 10.8 (Mountain Lion)
 
 PYTHON_VERSION=`python -c 'import sys; print(".".join(map(str, sys.version_info[:3])))'`
 
