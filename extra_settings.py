@@ -126,7 +126,7 @@ def jinjaify_templates(contents, filename):
     if filename == 'index.html':
         keyword = '</h5>'
         pos = contents.find(keyword)+len(keyword)+2
-        new = '            {% set template = "<a href=\\"http://jinja.pocoo.org/docs/\\" target=\\"_blank\\">Jinja2</a> v2.6" %}\n'
+        new = '            {% set template = "<a href=\\"http://jinja.pocoo.org/docs/\\" target=\\"_blank\\">Jinja2</a>" %}\n'
         new += '            <li style="margin-left:35px"><h5>{{ template|safe }} templating engine enabled with '
         new += '<a href="https://github.com/coffin/coffin" target="_blank">Coffin</a></h5></li>\n\n'
         contents = insert(contents, new, pos)
