@@ -193,6 +193,7 @@ django_pathify = {
     'appurls.py':                   ['%(APP_NAME)s/'],
     'django.wsgi':                  ['apache/'],
     'forms.py':                     ['%(APP_NAME)s/'],
+    'jinja2.py':                    ['%(PROJECT_NAME)s/'],
     'manage.py':                    [''],
     'model_forms.py':               ['%(APP_NAME)s/'],
     'models.py':                    ['%(APP_NAME)s/'],
@@ -206,9 +207,6 @@ django_pathify = {
     'views.py':                     ['%(APP_NAME)s/'],
     'wsgi.py':                      ['%(PROJECT_NAME)s/'],
 }
-
-if arguments.jinja2:
-    django_pathify['jinja2.py'] = ['%(PROJECT_NAME)s/']
 
 # Trailing / may be included or excluded up to this point
 PROJECT_PATH = arguments.path.rstrip('/') + '/'
@@ -268,7 +266,7 @@ for dir_name in needed_dirs:
 
 # Build list of all django-specific files to be copied into new project.
 django_files = [x for x in os.listdir(DJANGO_FILES_PATH)
-                if x.endswith('-needed')]
+                if x.endswith('-needed') and x != "jinja2.py-needed"]
 
 if not arguments.quiet:
     print "Creating django files..."
