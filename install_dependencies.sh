@@ -21,7 +21,7 @@ if [ -z `which pip` ]
 fi
 
 # Installs Distribute http://pypi.python.org/pypi/distribute
-curl -O http://python-distribute.org/distribute_setup.py
+curl -O https://raw.github.com/imkevinxu/django-projectbuilder/master/distribute_setup.py
 sudo python distribute_setup.py
 rm -f distribute*
 
