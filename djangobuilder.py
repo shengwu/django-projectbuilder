@@ -266,7 +266,9 @@ for dir_name in needed_dirs:
 
 # Build list of all django-specific files to be copied into new project.
 django_files = [x for x in os.listdir(DJANGO_FILES_PATH)
-                if x.endswith('-needed') and x != "jinja2.py-needed"]
+                if x.endswith('-needed')]
+if not arguments.jinja2:
+    django_files.remove('jinja2.py-needed')
 
 if not arguments.quiet:
     print "Creating django files..."
