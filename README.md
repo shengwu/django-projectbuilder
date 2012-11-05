@@ -82,31 +82,22 @@ with the super handy Django Debug Toolbar
     python djangobuilder.py --path ~/new_project --debug
 
 If you add the optional `--jinja2` argument, your project will be created
-using Jinja2 as the default Templating engine with Coffin as the adapter
-
-Warning: login.html is still using Django templating engine because of the Django auth module
+using Jinja2 as the default templating engine with Coffin as the adapter
 
     python djangobuilder.py --path ~/new_project --jinja2
 
 
 ## Production Instructions
 
-### Server Usage
+### Auto Initial Heroku Deploy
 
-After cloning this repo to one of your many servers, `cd` into it and
-run
+To automate the steps for your initial Heroku deploy, `cd` into your project folder and run
 
-    bash gitbuilder.sh ~/new_project
+    bash initial_heroku_deploy.sh
 
-to create the top-level project directory, bare git repo, and empty
-${PROJECT_NAME}_site directory for the soon-to-exist Django project.
-Follow the instructions echoed to the screen, which include using
-`apachebuilder.sh` to generate your project's Apache config.
+### Heroku Usage Details
 
-### Heroku Usage
-
-Heroku requires that you use Postgres as your database.  To install
-Postgres, run
+Heroku requires that you use Postgres as your database.  To install Postgres, run
 
     pip install psycopg2 dj-database-url
 
@@ -157,12 +148,16 @@ See
 [Getting Started with Django on Heroku/Cedar](https://devcenter.heroku.com/articles/django)
 for more on deploying to Heroku.
 
-### Auto Initial Heroku Deploy
+### Normal Server Usage
 
-To automate the above steps for your initial Heroku deploy,
-`cd` into your project folder and run
+After cloning this repo to one of your many servers like AWS, `cd` into it and run
 
-    bash path/to/django-projectbuilder/initial_heroku_deploy.sh
+    bash gitbuilder.sh ~/new_project
+
+to create the top-level project directory, bare git repo, and empty
+${PROJECT_NAME}_site directory for the soon-to-exist Django project.
+Follow the instructions echoed to the screen, which include using
+`apachebuilder.sh` to generate your project's Apache config.
 
 
 ## Troubleshooting
