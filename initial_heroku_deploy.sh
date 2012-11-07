@@ -34,7 +34,7 @@ if [ ! -d $1 ]; then
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             echo
-            echo "    ┬──┬﻿ ノ( ゜-゜ノ)  chill out bro"
+            echo "    ┬──┬ ノ( ゜-゜ノ)  chill out bro"
             exit 0
         fi
 
