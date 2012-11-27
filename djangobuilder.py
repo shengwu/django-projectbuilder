@@ -160,7 +160,9 @@ def copy_files(folder_path, file_types, pathify):
             # Path names include '%(PROJECT_NAME)s', etc
             file_path = dir % replacement_values
             f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
-            new_contents = contents % replacement_values
+            new_contents = contents
+            if "%s" not in new_contents:
+                new_contents = contents % replacement_values
 
             # Appends certain attributes and settings to some django files for
             # various extra packages according to the arguments
