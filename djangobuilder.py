@@ -200,6 +200,7 @@ django_pathify = {
     'model_forms.py':               ['%(APP_NAME)s/'],
     'models.py':                    ['%(APP_NAME)s/'],
     'notes.txt':                    [''],
+    'Procfile':                     [''],
     'README.md':                    [''],
     'requirements.txt':             [''],
     'settings.py':                  ['%(PROJECT_NAME)s/'],

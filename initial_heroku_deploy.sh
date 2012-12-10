@@ -9,7 +9,7 @@
 # Script that undos the work of the initial heroku deployment littered with emoticans
 # Invoked by an --undo parameter
 #
-# UNINSTALLS 'psycopg2' and 'dj-database-url',
+# UNINSTALLS 'psycopg2', 'dj-database-url', and 'gunicorn'
 # RESETS the git head back one commit, and
 # DESTROYS the heroku app
 #####################################
@@ -28,7 +28,7 @@ if [ ! -d $1 ]; then
             exit 0
         fi
         echo
-        echo "    This will UNINSTALL 'psycopg2' and 'dj-database-url',"
+        echo "    This will UNINSTALL 'psycopg2', 'dj-database-url', and 'gunicorn'"
         echo "    RESET the git head back one commit, and DESTROY the heroku app"
         read -p "    Last chance, are you sure you want to undo? " -n 1
         echo
@@ -44,7 +44,7 @@ if [ ! -d $1 ]; then
         read -p "    What is the name of the Heroku app? "
         echo
         echo "[START] Undoing initial Heroku deployment....."
-        pip uninstall psycopg2 dj-database-url
+        pip uninstall psycopg2 dj-database-url gunicorn
         git reset --hard HEAD^
         heroku destroy --app $REPLY
         echo
@@ -118,9 +118,8 @@ HEROKU_NAME=$REPLY
 echo
 echo "[START] Preparing the project for Heroku deployment....."
 
-# Installs psycopg2 and dj-database-url and updates requirements.txt
-pip install psycopg2
-pip install dj-database-url
+# Installs psycopg2, dj-database-url, and gunicorn and updates requirements.txt
+pip install psycopg2 dj-database-url gunicorn
 pip freeze > requirements.txt
 
 # Updates settings.py with proper heroku database setting
@@ -162,9 +161,6 @@ git push heroku master
 # Sync the Django models with the database schema
 heroku run python manage.py syncdb
 
-# Run `collectstatic` on Production server
-heroku run python manage.py collectstatic
-
 # Opens the website in default browser
 echo
 heroku open
@@ -177,7 +173,6 @@ echo "    # Make sure you also:"
 echo "        - Add any API Secret Keys as config variables"
 echo "        - Migrate any apps on the database"
 echo "        - Configure any custom domains"
-echo "        - Run `collectstatic` if needed"
 echo
 echo "    # In case there was an error during deployment, run the script again with --undo parameter"
 
