@@ -162,6 +162,9 @@ git push heroku master
 # Sync the Django models with the database schema
 heroku run python manage.py syncdb
 
+# Run `collectstatic` on Production server
+heroku run python manage.py collectstatic
+
 # Opens the website in default browser
 echo
 heroku open
@@ -174,6 +177,7 @@ echo "    # Make sure you also:"
 echo "        - Add any API Secret Keys as config variables"
 echo "        - Migrate any apps on the database"
 echo "        - Configure any custom domains"
+echo "        - Run `collectstatic` if needed"
 echo
 echo "    # In case there was an error during deployment, run the script again with --undo parameter"
 
