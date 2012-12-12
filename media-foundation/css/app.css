@@ -7,10 +7,11 @@
 .fl { float: left; }
 .fr { float: right; }
 .clear { clear: both; }
-.block { display: block; }
-.hidden { display: none; }
-.inline_block { display: inline-block; }
+.block { display: block !important; }
+.hidden { display: none !important; }
+.inline-block { display: inline-block !important; }
 .error { color: #c60f13; }
+.visible { opacity: 1; }
 
 /* -----------------------------------------
    LOGIN Styles
