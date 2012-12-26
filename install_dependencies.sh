@@ -72,3 +72,5 @@ echo
 echo "    ヽ(^o^)丿  yaaaaaaaay"
 echo
 echo "    All dependencies installed!"
+echo "    If there are still errors, try installing Xcode and then Command Line Tools"
+echo "    http://stackoverflow.com/questions/11170414/how-to-get-virtualenv-to-work-after-upgrading-to-lion"
