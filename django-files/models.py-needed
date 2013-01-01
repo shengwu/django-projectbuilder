@@ -7,8 +7,8 @@ import datetime
 import os
 
 class Base(models.Model):
-    created_at  = models.DateTimeField(auto_now=True)
-    modified_at = models.DateTimeField(auto_now=True, auto_now_add=True)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now_add=True, auto_now=True)
 
     class Meta:
         abstract = True
