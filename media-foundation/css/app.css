@@ -40,7 +40,7 @@ input:focus, textarea:focus {
 }
 
 /* -----------------------------------------
-   HEADER STYLES
+   HEADER & FOOTER STYLES
 ----------------------------------------- */
 
 header h1 {
@@ -58,6 +58,11 @@ header #right_nav i {
     position: relative;
     padding-right: 4px;
     top: 1px;
+}
+
+footer {
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
 }
 
 /* -----------------------------------------
