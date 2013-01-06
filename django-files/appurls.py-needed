@@ -5,8 +5,7 @@ from django.contrib.auth.views import login, logout
 def smartlogin(request, **kwargs):
     if request.user.is_authenticated():
         return redirect('index')
-    else:
-        return login(request, **kwargs)
+    return login(request, **kwargs)
 
 urlpatterns = patterns('%(APP_NAME)s.views',
     url(r'^$', 'index', name='index'),
