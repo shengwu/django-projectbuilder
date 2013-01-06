@@ -9,7 +9,7 @@ import os
 PROJECT_PATH = os.path.dirname(__file__)
 
 DEBUG = True
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
