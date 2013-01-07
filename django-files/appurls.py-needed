@@ -3,8 +3,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.views import login, logout
 
 def smartlogin(request, **kwargs):
-    if request.user.is_authenticated():
-        return redirect('index')
+    if request.user.is_authenticated() and 'next' not in request.GET:
+        return redirect('courses')
     return login(request, **kwargs)
 
 urlpatterns = patterns('%(APP_NAME)s.views',
