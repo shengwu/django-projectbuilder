@@ -37,9 +37,9 @@ For best results, make sure you have at least:
 
 In case something's not working after pulling, try one of these:
 
-    workon %(PROJECT_NAME)s                                 # make sure you're in the right virtual environment
-    pip install -r requirements.txt                         # make sure python packages are up to date
-    python manage.py migrate %(PROJECT_NAME)s_app           # make sure database schema is migrated
+    workon %(PROJECT_NAME)s                                 # makes sure you're in the right virtual environment
+    pip install -r requirements.txt                         # makes sure python packages are up to date
+    python manage.py migrate %(PROJECT_NAME)s_app           # makes sure database schema is migrated
 
 ### Missing Dependencies
 
