@@ -118,8 +118,8 @@ HEROKU_NAME=$REPLY
 echo
 echo "[START] Preparing the project for Heroku deployment....."
 
-# Installs psycopg2, dj-database-url, and gunicorn and updates requirements.txt
-pip install psycopg2 dj-database-url gunicorn
+# Installs psycopg2, dj-database-url, gunicorn, and django-postgrespool and updates requirements.txt
+pip install psycopg2 dj-database-url gunicorn django-postgrespool
 pip freeze > requirements.txt
 
 # Updates settings.py with proper heroku database setting
@@ -134,10 +134,15 @@ echo "else:"                                                                    
 echo "    try:"                                                                                 >> $SETTINGS_PATH
 echo "        import dj_database_url"                                                           >> $SETTINGS_PATH
 echo "        DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}"  >> $SETTINGS_PATH
+echo "        DATABASES['default']['ENGINE'] = 'django_postgrespool'"                           >> $SETTINGS_PATH
 echo                                                                                            >> $SETTINGS_PATH
 echo "    except ImportError:"                                                                  >> $SETTINGS_PATH
 echo "        import sys"                                                                       >> $SETTINGS_PATH
 echo "        sys.stderr.write( 'heroku failed to setup database settings\n' )"                 >> $SETTINGS_PATH
+echo                                                                                            >> $SETTINGS_PATH
+echo "    SOUTH_DATABASE_ADAPTERS = {"                                                          >> $SETTINGS_PATH
+echo "        'default': 'south.db.postgresql_psycopg2'"                                        >> $SETTINGS_PATH
+echo "    }"                                                                                    >> $SETTINGS_PATH
 
 # Commiting for initial heroku deploy
 git add -A && git commit -m "Initial Heroku Deploy preparation complete!"
