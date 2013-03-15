@@ -126,9 +126,9 @@ def jinjaify_templates(contents, filename):
     if filename == 'index.html':
         keyword = '</h5>'
         pos = contents.find(keyword)+len(keyword)+2
-        new = '            {% set template = "<a href=\\"http://jinja.pocoo.org/docs/\\" target=\\"_blank\\">Jinja2</a>" %}\n'
-        new += '            <li style="margin-left:35px"><h5>{{ template|safe }} templating engine enabled with '
-        new += '<a href="https://github.com/coffin/coffin" target="_blank">Coffin</a></h5></li>\n\n'
+        new = '            <li style="margin-left:35px"><h5><a href="http://jinja.pocoo.org/docs/" target="_blank">'
+        new += 'Jinja2</a> templating engine enabled with <a href="https://github.com/coffin/coffin" target="_blank">'
+        new += 'Coffin</a></h5></li>\n\n'
         contents = insert(contents, new, pos)
     elif filename == 'base.html':
         contents = contents.replace('user.is_authenticated', 'user.is_authenticated()')
