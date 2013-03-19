@@ -19,7 +19,7 @@ def insert(original, new, pos):
 bcryptify_files = ['requirements.txt', 'settings.py', 'index.html', 'README.md']
 def bcryptify(contents, filename):
     if filename == 'requirements.txt':
-        contents += '\npy-bcrypt==0.2'
+        contents += '\npy-bcrypt'
     elif filename == 'settings.py':
         new  = "PASSWORD_HASHERS = (\n"
         new += "    'django.contrib.auth.hashers.BCryptPasswordHasher',\n"
@@ -52,7 +52,7 @@ def bcryptify(contents, filename):
 debugify_files = ['requirements.txt', 'settings.py', 'index.html', 'README.md']
 def debugify(contents, filename):
     if filename == 'requirements.txt':
-        contents += '\ndjango-debug-toolbar==0.9.4'
+        contents += '\ndjango-debug-toolbar'
     elif filename == 'settings.py':
         new = "    'debug_toolbar',\n"
         keyword = 'south'
@@ -91,8 +91,8 @@ def debugify(contents, filename):
 jinjaify_files = ['requirements.txt', 'settings.py', 'views.py', 'urls.py', 'appurls.py', 'README.md']
 def jinjaify(contents, filename):
     if filename == 'requirements.txt':
-        contents += '\nJinja2==2.6'
-        contents += '\nCoffin==0.3.7'
+        contents += '\nJinja2'
+        contents += '\nCoffin'
     elif filename == 'settings.py':
         new = "    'coffin',\n"
         keyword = 'south'

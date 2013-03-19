@@ -9,7 +9,7 @@
 # Script that undos the work of the initial heroku deployment littered with emoticans
 # Invoked by an --undo parameter
 #
-# UNINSTALLS 'psycopg2', 'dj-database-url', and 'gunicorn'
+# UNINSTALLS 'psycopg2' and 'dj-database-url'
 # RESETS the git head back one commit, and
 # DESTROYS the heroku app
 #####################################
@@ -28,7 +28,7 @@ if [ ! -d $1 ]; then
             exit 0
         fi
         echo
-        echo "    This will UNINSTALL 'psycopg2', 'dj-database-url', and 'gunicorn'"
+        echo "    This will UNINSTALL 'psycopg2' and 'dj-database-url'"
         echo "    RESET the git head back one commit, and DESTROY the heroku app"
         read -p "    Last chance, are you sure you want to undo? " -n 1
         echo
@@ -44,7 +44,7 @@ if [ ! -d $1 ]; then
         read -p "    What is the name of the Heroku app? "
         echo
         echo "[START] Undoing initial Heroku deployment....."
-        pip uninstall psycopg2 dj-database-url gunicorn
+        pip uninstall psycopg2 dj-database-url
         git reset --hard HEAD^
         heroku destroy --app $REPLY
         echo
@@ -118,8 +118,8 @@ HEROKU_NAME=$REPLY
 echo
 echo "[START] Preparing the project for Heroku deployment....."
 
-# Installs psycopg2, dj-database-url, gunicorn, and django-postgrespool and updates requirements.txt
-pip install psycopg2 dj-database-url gunicorn django-postgrespool
+# Installs psycopg2, dj-database-url, and django-postgrespool and updates requirements.txt
+pip install psycopg2 dj-database-url django-postgrespool
 pip freeze > requirements.txt
 
 # Updates settings.py with proper heroku database setting
