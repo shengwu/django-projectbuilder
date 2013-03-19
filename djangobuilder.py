@@ -189,6 +189,7 @@ def sh(cmd):
 # Maps cleaned filenames to where each file should be copied relative
 # to PROJECT_PATH
 django_pathify = {
+    '.env':                         [''],
     '.gitignore':                   [''],
     '__init__.py':                  ['%(PROJECT_NAME)s/', '%(APP_NAME)s/'],
     'admin.py':                     ['%(APP_NAME)s/'],
