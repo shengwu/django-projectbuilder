@@ -13,8 +13,8 @@ Auto-generated from [Kevin Xu](https://github.com/imkevinxu)'s [Django Project B
 
 For best results, make sure you have at least:
 
-* Python 2.7.2
-* Django 1.4.1
+* Python 2.7
+* Django 1.4
 
 ### Customizations
 
@@ -31,7 +31,15 @@ For best results, make sure you have at least:
     python manage.py syncdb                                 # sets up django database
     python manage.py migrate %(PROJECT_NAME)s_app           # migrates any south migrations
 
+### Running the Application
+
+    python manage.py runserver
+
 ## Troubleshooting
+
+### Local Environment Variables
+
+App uses a local .env not stored in the git repo to get some environment variables. Email %(ADMIN_NAME)s <%(ADMIN_EMAIL)s> to get it
 
 ### Workflow
 
@@ -40,6 +48,7 @@ In case something's not working after pulling, try one of these:
     workon %(PROJECT_NAME)s                                 # makes sure you're in the right virtual environment
     pip install -r requirements.txt                         # makes sure python packages are up to date
     python manage.py migrate %(PROJECT_NAME)s_app           # makes sure database schema is migrated
+    source .env                                             # makes sure local environment variables are setup
 
 ### Missing Dependencies
 
