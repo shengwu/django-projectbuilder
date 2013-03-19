@@ -346,8 +346,8 @@ if not arguments.quiet:
 # FIXME Shouldn't assume the location of virtualenvwrapper.sh
 cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
 cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
-cmd += ' pip install -r requirements.txt && pip freeze > requirements.txt"'
-cmd += ' python manage.py collectstatic --noinput"'
+cmd += ' pip install -r requirements.txt && pip freeze > requirements.txt'
+cmd += ' && python manage.py collectstatic --noinput"'
 
 output = sh(cmd)
 
