@@ -3,9 +3,7 @@
 import os
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
-DEBUG = False
-if os.environ.get('DEBUG') in ['True', 'False']:
-    DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = True if os.environ.get('DEBUG') == 'True' else False
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -15,16 +13,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME':  '%(PROJECT_NAME)s',                      # Or path to database file if using sqlite3.
-        'USER': '%(PROJECT_NAME)s_user',                      # Not used with sqlite3.
-        'PASSWORD': '%(PROJECT_PASSWORD)s',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
+# DATABASE variable is set in settings_local.py for development
+# and at the bottom of settings.py for production on heroku
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -186,3 +176,22 @@ if 'PRODUCTION' not in os.environ:
             INSTALLED_APPS += LOCAL_INSTALLED_APPS
         except NameError:
             pass
+
+####
+# Heroku Production Server
+# import heroku database settings overriding the defaults
+# https://devcenter.heroku.com/articles/django#database-settings
+####
+else:
+    try:
+        import dj_database_url
+        DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+        DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
+    except ImportError:
+        import sys
+        sys.stderr.write( 'heroku failed to setup database settings\n' )
+
+    SOUTH_DATABASE_ADAPTERS = {
+        'default': 'south.db.postgresql_psycopg2'
+    }

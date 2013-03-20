@@ -122,28 +122,6 @@ echo "[START] Preparing the project for Heroku deployment....."
 pip install psycopg2 dj-database-url django-postgrespool
 pip freeze > requirements.txt
 
-# Updates settings.py with proper heroku database setting
-SETTINGS_PATH="$( find * -name settings.py )"
-echo                                                                                            >> $SETTINGS_PATH
-echo "####"                                                                                     >> $SETTINGS_PATH
-echo "# Heroku Production Server"                                                               >> $SETTINGS_PATH
-echo "# import heroku database settings overriding the defaults"                                >> $SETTINGS_PATH
-echo "# https://devcenter.heroku.com/articles/django#database-settings"                         >> $SETTINGS_PATH
-echo "####"                                                                                     >> $SETTINGS_PATH
-echo "else:"                                                                                    >> $SETTINGS_PATH
-echo "    try:"                                                                                 >> $SETTINGS_PATH
-echo "        import dj_database_url"                                                           >> $SETTINGS_PATH
-echo "        DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}"  >> $SETTINGS_PATH
-echo "        DATABASES['default']['ENGINE'] = 'django_postgrespool'"                           >> $SETTINGS_PATH
-echo                                                                                            >> $SETTINGS_PATH
-echo "    except ImportError:"                                                                  >> $SETTINGS_PATH
-echo "        import sys"                                                                       >> $SETTINGS_PATH
-echo "        sys.stderr.write( 'heroku failed to setup database settings\n' )"                 >> $SETTINGS_PATH
-echo                                                                                            >> $SETTINGS_PATH
-echo "    SOUTH_DATABASE_ADAPTERS = {"                                                          >> $SETTINGS_PATH
-echo "        'default': 'south.db.postgresql_psycopg2'"                                        >> $SETTINGS_PATH
-echo "    }"                                                                                    >> $SETTINGS_PATH
-
 # Commiting for initial heroku deploy
 git add -A && git commit -m "Initial Heroku Deploy preparation complete!"
 
@@ -166,6 +144,9 @@ git push heroku master
 # Sync the Django models with the database schema
 heroku run python manage.py syncdb
 
+# Migrate the Django models on the production database
+heroku run python manage.py migrate
+
 # Opens the website in default browser
 echo
 heroku open
@@ -176,7 +157,6 @@ echo "    ヽ(^o^)丿  yaaaaaaaay"
 echo
 echo "    # Make sure you also:"
 echo "        - Add any API Secret Keys as config variables"
-echo "        - Migrate any apps on the database"
 echo "        - Configure any custom domains"
 echo
 echo "    # In case there was an error during deployment, run the script again with --undo parameter"
