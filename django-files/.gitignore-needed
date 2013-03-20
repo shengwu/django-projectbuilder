@@ -1,7 +1,6 @@
-*~
-*.swp
 *.pyc
+*.swp
+*~
 .DS_Store
-.env
 db.sql
 notes.txt

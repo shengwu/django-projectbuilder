@@ -369,6 +369,14 @@ output = sh(cmd)
 if not arguments.quiet:
     print '\n', output, '\n'
 
+cmd  = 'bash -c "echo -e \'\n.env\n.env.dev\' >> .gitignore &&'
+cmd += ' sort .gitignore -o .gitignore && git rm --cached .env .env.dev'
+cmd += ' git add . && git commit -m \'updated gitignore to not update .env files\'"'
+output = sh(cmd)
+
+if not arguments.quiet:
+    print '\n', output, '\n'
+
 print "\nDone! Now run\n"
 print "    cd %(PROJECT_PATH)s && workon %(PROJECT_NAME)s &&" % replacement_values,
 print "python manage.py syncdb\n\nGet to work!"
