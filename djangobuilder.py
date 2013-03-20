@@ -363,15 +363,8 @@ if not arguments.quiet:
     print "Creating git repo..."
 
 cmd  = 'bash -c "cd %s &&' % PROJECT_PATH
-cmd += ' git add . && git commit -m \'first commit\'"'
-output = sh(cmd)
-
-if not arguments.quiet:
-    print '\n', output, '\n'
-
-cmd  = 'bash -c "echo -e \'\n.env\n.env.dev\' >> .gitignore &&'
-cmd += ' sort .gitignore -o .gitignore && git rm --cached .env .env.dev &&'
-cmd += ' git add . && git commit -m \'updated gitignore to not update .env files\'"'
+cmd += ' git add . && git commit -m \'first commit\' &&'
+cmd += ' git update-index --assume-unchanged .env .env.dev"'
 output = sh(cmd)
 
 if not arguments.quiet:
