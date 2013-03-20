@@ -22,7 +22,7 @@ For best results, make sure you have at least:
 
 ### Installing the Application
 
-    cd %(PROJECT_NAME)s/                                    # change directory to project after initial git clone
+    cd %(PROJECT_NAME)s/                                    # changes directory to project after initial git clone
     mkvirtualenv %(PROJECT_NAME)s                           # requires proper virtualenv setup
     workon %(PROJECT_NAME)s                                 # sets the virtual environment
 
@@ -32,7 +32,7 @@ For best results, make sure you have at least:
 
 ### Running the Application
 
-Application will be at [http://localhost:8000](http://localhost:8000) after running one of the two commands
+Application will be running at [http://localhost:8000](http://localhost:8000) after running one of the two commands:
 
     python manage.py runserver                              # Normal way
 
