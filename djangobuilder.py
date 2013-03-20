@@ -190,6 +190,8 @@ def sh(cmd):
 # to PROJECT_PATH
 django_pathify = {
     '.env':                         [''],
+    '.env.dev':                     [''],
+    '.foreman':                     [''],
     '.gitignore':                   [''],
     '__init__.py':                  ['%(PROJECT_NAME)s/', '%(APP_NAME)s/'],
     'admin.py':                     ['%(APP_NAME)s/'],
@@ -202,6 +204,7 @@ django_pathify = {
     'models.py':                    ['%(APP_NAME)s/'],
     'notes.txt':                    [''],
     'Procfile':                     [''],
+    'Procfile.dev':                 [''],
     'README.md':                    [''],
     'requirements.txt':             [''],
     'settings.py':                  ['%(PROJECT_NAME)s/'],

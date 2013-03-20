@@ -164,5 +164,3 @@ echo "    # Make sure you also:"
 echo "        - Configure any custom domains"
 echo
 echo "    # In case there was an error during deployment, run the script again with --undo parameter"
-
-
