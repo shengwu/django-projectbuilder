@@ -1,23 +1,21 @@
-[Django Project Builder](http://builtbyptm.com/blog/announcing-django-project-builder-v01/ "Announcing Django Project Builder v0.1")
+[Django Project Builder](https://github.com/prototypemagic/django-projectbuilder)
 ======================
 
 ## Introduction
 
-Django Project Builder is the fastest, easiest way to, well... build a
-new Django project!
+Django Project Builder is the fastest, easiest way to build a new Django project!
+Originally created by [Prototype Magic](https://github.com/prototypemagic),
+this is a forked version with updated themes, packages, and opinionated best
+practices I have picked up over the years.
 
 ### Features and Benefits
 
-* Create a new Django project, git repo, virtualenv, and Django app
+* Create a new Django project inside a `git` repo and `virtualenv`
   with sane defaults and best practices _all_ with a single command
 
-* Prepare your server for deployment with a couple more commands
+* Auto-deploy your shiny new Django app to Heroku with a simple command!
 
-* Auto-deploy your shiny new Django app to your server with a simple
-  `git push`!  (Uses git hooks behind the scenes... but you don't need
-  to worry about that, do you?)
-
-* Three Front-end options, both with CSS Stylesheets and HTML Templates with a lot of swag.
+* Three frontend options with CSS, JS, and HTML Templates.
 
 * A bunch of extra packages and apps to go with your Django project
 
@@ -30,7 +28,7 @@ the __server scripts__ currently assume you're using Bash + virtualenv +
 virtualenvwrapper + Ubuntu + Apache.  We're working on reducing the
 number of dependencies.
 
-[See our TODO](https://github.com/prototypemagic/django-projectbuilder/blob/master/TODO.md)
+[Original TODO](https://github.com/prototypemagic/django-projectbuilder/blob/master/TODO.md)
 for what's on the horizon, and for what you may want to help out with.
 
 
@@ -44,6 +42,10 @@ then `cd` into the django-projectbuilder repo and run
 
     source install_dependencies.sh
 
+If you want to install dependencies without cloning this repo run
+
+    curl -o https://raw.github.com/imkevinxu/django-projectbuilder/master/install_dependencies.sh && source install_dependencies.sh && rm -f install_dependencies.sh
+
 ### Local Development Usage
 
 After cloning this repo to your local machine, `cd` into it and run
@@ -51,12 +53,12 @@ something like
 
     python djangobuilder.py --path ~/new_project
 
-to create the `~/new_project_site` directory, which contains _tons_ of
+to create the `~/new_project` directory, which contains _tons_ of
 Django boilerplate -- common imports, virtualenv creation, a new git
 repo, and more! `virtualenv` and `virtualenvwrapper` are required. `git` is
 recommended. Django is awesome.
 
-### Themes
+### Frontend Themes
 
 If you add the optional `--bootstrap` argument, your project will be created
 using all Bootstrap defaults for the front-end.
@@ -93,60 +95,10 @@ using Jinja2 as the default templating engine with Coffin as the adapter
 
 To automate the steps for your initial Heroku deploy, `cd` into your project folder and run
 
-    bash initial_heroku_deploy.sh
+    bash /path/to/django-projectbuilder/initial_heroku_deploy.sh
 
-### Heroku Usage Details
-
-Heroku requires that you use Postgres as your database.  To install Postgres, run
-
-    pip install psycopg2 dj-database-url
-
-then add psycopg2, dj-database-url and every other Python module in your virtualenv to requirements.txt with
-
-    pip freeze > requirements.txt
-
-You also need to add the following to your `settings.py` for Heroku to use the right database
-when you're in production. It's suggested to append this with an `else:` at the bottom of
-`settings.py` so it is only run on the production server rather than locally
-
-    import dj_database_url
-    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
-
-Now add and commit your changes to the git repo
-
-    git add * && git commit -m "Initial Heroku Deploy preparation complete!"
-
-Create your new Heroku server with
-
-    heroku create
-
-In order for the app to know Heroku is a production server, this line of code
-will add a heroku config variable for `PRODUCTION` so settings configure accordingly
-with os.environ.get()
-
-    heroku config:add PRODUCTION=True
-
-and adding this config variable will make it easier to turn `DEBUG` on without redeploying
-
-    heroku config:add DEBUG=False
-
-Take a deep breath. Deploy away!
-
-    git push heroku master
-
-Finally run this line of code to sync the Django models with the database schema
-
-    heroku run python manage.py syncdb
-
-Make sure you also:
-
-* Add any API Secret Keys as heroku config variables
-* Migrate any apps on the database
-* Configure any custom domains
-
-See
-[Getting Started with Django on Heroku/Cedar](https://devcenter.heroku.com/articles/django)
-for more on deploying to Heroku.
+See [Getting Started with Django on Heroku/Cedar](https://devcenter.heroku.com/articles/django)
+for more on deploying to Heroku and the [initial heroku deploy script](https://github.com/imkevinxu/django-projectbuilder/blob/master/initial_heroku_deploy.sh) to see how it works
 
 ### Normal Server Usage
 
