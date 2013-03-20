@@ -133,10 +133,10 @@ echo
 # Creates a new heroku app with prompted or random name and adds the git remote
 heroku create $HEROKU_NAME
 
-# Adds a heroku config variable for 'PRODUCTION' and 'DEBUG' so os.environ
-# knows it's a production server and for easy debugging without deploying every time
-heroku config:add PRODUCTION=True
-heroku config:add DEBUG=False
+# Downloads heroku-config and pushes environment variables in .env to heroku
+# https://devcenter.heroku.com/articles/config-vars#using-foreman-and-herokuconfig
+heroku plugins:install git://github.com/ddollar/heroku-config.git
+heroku config:push
 
 # Deploys to heroku
 git push heroku master
