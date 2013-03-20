@@ -9,7 +9,7 @@
 # Script that undos the work of the initial heroku deployment littered with emoticans
 # Invoked by an --undo parameter
 #
-# UNINSTALLS 'psycopg2' and 'dj-database-url'
+# UNINSTALLS 'psycopg2', 'dj-database-url', and 'django-postgrespool'
 # RESETS the git head back one commit, and
 # DESTROYS the heroku app
 #####################################
@@ -28,7 +28,7 @@ if [ ! -d $1 ]; then
             exit 0
         fi
         echo
-        echo "    This will UNINSTALL 'psycopg2' and 'dj-database-url'"
+        echo "    This will UNINSTALL 'psycopg2', 'dj-database-url', and 'django-postgrespool'"
         echo "    RESET the git head back one commit, and DESTROY the heroku app"
         read -p "    Last chance, are you sure you want to undo? " -n 1
         echo
@@ -44,7 +44,7 @@ if [ ! -d $1 ]; then
         read -p "    What is the name of the Heroku app? "
         echo
         echo "[START] Undoing initial Heroku deployment....."
-        pip uninstall psycopg2 dj-database-url
+        pip uninstall psycopg2 dj-database-url django-postgrespool
         git reset --hard HEAD^
         heroku destroy --app $REPLY
         echo
