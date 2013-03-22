@@ -37,6 +37,7 @@ Application will be running at [http://localhost:8000](http://localhost:8000) af
     python manage.py runserver                              # Normal way
 
     foreman start                                           # Advanced way
+                                                            # Requires .env and .env.dev files (see below)
                                                             # Sources environment variables and runs all processes
                                                             # Packaged with Heroku Toolbelt https://toolbelt.heroku.com/
 
@@ -44,7 +45,7 @@ Application will be running at [http://localhost:8000](http://localhost:8000) af
 
 ### Local Environment Variables
 
-App uses a local .env and .env.dev not updated in the git repo to get some environment variables. Email %(ADMIN_NAME)s <%(ADMIN_EMAIL)s> to get the latest version
+App uses a local .env and .env.dev not tracked in the git repo to get some environment variables. Email %(ADMIN_NAME)s <%(ADMIN_EMAIL)s> to get the latest version
 
 ### Workflow
 
@@ -53,7 +54,7 @@ In case something's not working after pulling, try one of these:
     workon %(PROJECT_NAME)s                                 # makes sure you're in the right virtual environment
     pip install -r requirements.txt                         # makes sure python packages are up to date
     python manage.py migrate %(PROJECT_NAME)s_app           # makes sure database schema is migrated
-    source .env                                             # makes sure local environment variables are setup
+    source .env.dev                                         # makes sure local environment variables are setup
 
 ### Missing Dependencies
 

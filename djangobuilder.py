@@ -363,8 +363,7 @@ if not arguments.quiet:
     print "Creating git repo..."
 
 cmd  = 'bash -c "cd %s &&' % PROJECT_PATH
-cmd += ' git add . && git commit -m \'first commit\' &&'
-cmd += ' git update-index --assume-unchanged .env .env.dev"'
+cmd += ' git add . && git commit -m \'first commit\'"'
 output = sh(cmd)
 
 if not arguments.quiet:
