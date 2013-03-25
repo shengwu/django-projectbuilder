@@ -185,7 +185,7 @@ if 'PRODUCTION' not in os.environ:
 else:
     try:
         import dj_database_url
-        DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+        DATABASES['default'] = dj_database_url.config(default='postgres://localhost')
         DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
     except ImportError:
@@ -195,3 +195,6 @@ else:
     SOUTH_DATABASE_ADAPTERS = {
         'default': 'south.db.postgresql_psycopg2'
     }
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
