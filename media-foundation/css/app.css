@@ -6,6 +6,10 @@
 
 .fl { float: left; }
 .fr { float: right; }
+.tl { text-align: left; }
+.tr { text-align: right; }
+.center { text-align: center; }
+.margin-center { margin: 0 auto; }
 .clear { clear: both; }
 .block { display: block !important; }
 .hidden { display: none !important; }
