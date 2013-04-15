@@ -44,7 +44,7 @@ then `cd` into the django-projectbuilder repo and run
 
 If you want to install dependencies without cloning this repo run
 
-    curl -o https://raw.github.com/imkevinxu/django-projectbuilder/master/install_dependencies.sh && source install_dependencies.sh && rm -f install_dependencies.sh
+    curl -O https://raw.github.com/imkevinxu/django-projectbuilder/master/install_dependencies.sh && source install_dependencies.sh && rm -f install_dependencies.sh
 
 ### Local Development Usage
 
