@@ -146,7 +146,7 @@ from extra_settings import *
 
 def copy_files(folder_path, file_types, pathify):
     """Copies the contents of django_files and server_scripts, and
-    performs string interpolations (e.g., %(APP_NAME)s => 'myapp')"""
+    performs string interpolations (e.g., %(PROJECT_NAME)s => 'myapp')"""
     for filename in file_types:
         # Grab *-needed filenames
         f_read = open(folder_path + filename, 'r')
@@ -193,32 +193,31 @@ django_pathify = {
     '.env.dev':                     [''],
     '.foreman':                     [''],
     '.gitignore':                   [''],
-    '__init__.py':                  ['%(PROJECT_NAME)s/', '%(APP_NAME)s/'],
-    'admin.py':                     ['%(APP_NAME)s/'],
-    'appurls.py':                   ['%(APP_NAME)s/'],
+    '__init__.py':                  ['%(CONFIG_NAME)s/', '%(PROJECT_NAME)s/'],
+    'admin.py':                     ['%(PROJECT_NAME)s/'],
+    'appurls.py':                   ['%(PROJECT_NAME)s/'],
     'django.wsgi':                  ['apache/'],
-    'forms.py':                     ['%(APP_NAME)s/'],
-    'jinja2.py':                    ['%(PROJECT_NAME)s/'],
+    'forms.py':                     ['%(PROJECT_NAME)s/'],
+    'jinja2.py':                    ['%(CONFIG_NAME)s/'],
     'manage.py':                    [''],
-    'model_forms.py':               ['%(APP_NAME)s/'],
-    'models.py':                    ['%(APP_NAME)s/'],
+    'model_forms.py':               ['%(PROJECT_NAME)s/'],
+    'models.py':                    ['%(PROJECT_NAME)s/'],
     'notes.txt':                    [''],
     'Procfile':                     [''],
     'Procfile.dev':                 [''],
     'README.md':                    [''],
     'requirements.txt':             [''],
-    'settings.py':                  ['%(PROJECT_NAME)s/'],
-    'settings_local.py':            ['%(PROJECT_NAME)s/'],
-    'tests.py':                     ['%(APP_NAME)s/'],
-    'urls.py':                      ['%(PROJECT_NAME)s/'],
-    'views.py':                     ['%(APP_NAME)s/'],
-    'wsgi.py':                      ['%(PROJECT_NAME)s/'],
+    'settings.py':                  ['%(CONFIG_NAME)s/'],
+    'settings_local.py':            ['%(CONFIG_NAME)s/'],
+    'tests.py':                     ['%(PROJECT_NAME)s/'],
+    'urls.py':                      ['%(CONFIG_NAME)s/'],
+    'views.py':                     ['%(PROJECT_NAME)s/'],
+    'wsgi.py':                      ['%(CONFIG_NAME)s/'],
 }
 
 # Trailing / may be included or excluded up to this point
 PROJECT_PATH = arguments.path.rstrip('/') + '/'
 PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0]  # Before the '/'
-APP_NAME     = PROJECT_NAME + '_app'
 BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
 
 # ADMIN INFORMATION
@@ -241,17 +240,17 @@ PROJECT_PASSWORD = ''.join([random.choice(string.printable[:62])
 replacement_values = {
     'PROJECT_NAME':     PROJECT_NAME,
     'PROJECT_NAME_CAP': PROJECT_NAME.capitalize(),
-    'APP_NAME':         APP_NAME,
     'PROJECT_PASSWORD': PROJECT_PASSWORD,
     'BASE_PATH':        BASE_PATH,
     'SECRET_KEY':       SECRET_KEY,
     'PROJECT_PATH':     PROJECT_PATH,
     'ADMIN_NAME':       ADMIN_NAME,
     'ADMIN_EMAIL':      ADMIN_EMAIL,
+    'CONFIG_NAME':      'config',
 }
 
 # Doing it this way so DPB can add 'extra_settings' on the fly.
-needed_dirs = ['static', 'apache', '%(PROJECT_NAME)s', '%(APP_NAME)s']
+needed_dirs = ['static', 'apache', '%(CONFIG_NAME)s', '%(PROJECT_NAME)s']
 
 # Make sure PROJECT_NAME follows Django's restrictions
 check_projectname()

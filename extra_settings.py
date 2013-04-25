@@ -108,7 +108,7 @@ def jinjaify(contents, filename):
         contents = contents.replace('login, logout', 'logout')
         keyword = 'logout'
         pos = contents.find(keyword)+len(keyword)+2
-        new = 'from %(PROJECT_NAME)s.jinja2 import login\n\n'
+        new = 'from %(CONFIG_NAME)s.jinja2 import login\n\n'
         contents = insert(contents, new, pos)
 
     elif filename == 'README.md':

@@ -12,9 +12,9 @@ from django.shortcuts import render_to_response, get_object_or_404, render, \
 from django.template import loader, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 
-from %(APP_NAME)s.models import *
-from %(APP_NAME)s.model_forms import *
-from %(APP_NAME)s.forms import *
+from %(PROJECT_NAME)s.models import *
+from %(PROJECT_NAME)s.model_forms import *
+from %(PROJECT_NAME)s.forms import *
 
 #@login_required
 def index(request):

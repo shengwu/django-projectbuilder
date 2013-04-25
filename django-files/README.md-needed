@@ -28,7 +28,7 @@ For best results, make sure you have at least:
 
     pip install -r requirements.txt                         # installs all python packages
     python manage.py syncdb                                 # sets up django database
-    python manage.py migrate %(APP_NAME)s                   # migrates any south migrations
+    python manage.py migrate %(PROJECT_NAME)s                   # migrates any south migrations
 
 ### Running the Application
 
@@ -53,7 +53,7 @@ In case something's not working after pulling, try one of these:
 
     workon %(PROJECT_NAME)s                                 # makes sure you're in the right virtual environment
     pip install -r requirements.txt                         # makes sure python packages are up to date
-    python manage.py migrate %(APP_NAME)s                   # makes sure database schema is migrated
+    python manage.py migrate %(PROJECT_NAME)s                   # makes sure database schema is migrated
     source .env.dev                                         # makes sure local environment variables are setup
 
 ### Missing Dependencies

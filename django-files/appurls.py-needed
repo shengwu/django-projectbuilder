@@ -7,7 +7,7 @@ def smartlogin(request, **kwargs):
         return redirect('index')
     return login(request, **kwargs)
 
-urlpatterns = patterns('%(APP_NAME)s.views',
+urlpatterns = patterns('%(PROJECT_NAME)s.views',
     url(r'^$', 'index', name='index'),
     url(r'^login/$', smartlogin, kwargs=dict(template_name='login.html'), name='login'),
     url(r'^logout/$', logout, kwargs=dict(next_page='/'), name='logout'),
