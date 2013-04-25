@@ -13,7 +13,7 @@
   $(document).foundation();
 
   // Hide address bar on mobile devices (except if #hash present, so we don't mess up deep linking).
-  if (Modernizr.touch) {
+  if (window.Modernizr.touch) {
     $(window).load(function () {
       setTimeout(function () {
         window.scrollTo(0, 1);
