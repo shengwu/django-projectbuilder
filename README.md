@@ -141,6 +141,17 @@ to fix this issue, then again try running
 
 from within your project's virtualenv to install `psycopg2`.
 
-### Questions?
+## Authors
 
-If you run into any other issues, please let us know!
+### Original Authors
+
+* [Steve Phillips](https://github.com/elimisteve) <steve@builtbyptm.com>
+* [AJ Bahnken](https://github.com/ajvb) <aj@builtbyptm.com>
+
+Originally created by PTM Web Engineering, LLC in Santa Barbara, California
+
+### Personal Fork
+
+* [Kevin Xu](https://github.com/imkevinxu) <kevin@imkevinxu.com>
+
+This is an updated fork of django-projectbuilder with a bunch of opinionated best practices
