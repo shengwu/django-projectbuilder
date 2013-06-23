@@ -1,7 +1,6 @@
 #!/bin/sh
 # Kevin Xu / imkevinxu
-# 2012.08.23
-
+#
 # Basic script to install all the dependencies for Django Project Builder
 # Tested on a Mac OSX 10.7 (Lion) and 10.8 (Mountain Lion)
 

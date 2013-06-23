@@ -1,43 +1,29 @@
 # TODO
-- Make server scripts less (read: not) dependent upon...
-  - Ubuntu
-  - The location of `virtualenvwrapper.sh`
-  - Apache
-  - Bash
-- Rewrite DPB to either use Django itelf to render project files, or at least generate new projects the way Django does
-  - E.g., render something like `{{ project_name }}` instead of using `%(PROJECT_NAME)s`
-- Add modular support for non-`git` source control (`hg`, `bzr`, etc) system
-- Use stdin/out/err pipes to show output during `pip install -r requirements.txt`
-- Ensure the existence of all required programs
-  - E.g., pip, virtualenv, virtualenvwrapper, bash, and preferably git
-- Add `python manage.py migrate` to server's git hooks
-- Fix `cpvirtualenv` bug in `virtualenvwrapper.sh` or create our own replacement
-  - Create the `dpb-default` virtualenv, then copy it when creating new projects
-    - `cp -r ~/.virtualenvs/dpb-default ~/.virtualenvs/NEW_PROJECT_NAME`
-    - Replace `#!/home/username/.virtualenvs/dpb-default/bin/python` with `#!/home/username/.virtualenvs/NEW_PROJECT_NAME/bin/python`
-- Add above TODO items to GitHub's ticketing system
+convert HTML to 2 spaces
+add/organize media packages or move to static
+    foundation 3, 4
+    bootstrap 2, 3
+    960grid
+    skeleton
+    flat ui
+    http://websymphony.net/almost-flat-ui/
+    html5 responsive
+have custom grids and themes
+check out packages used in hackdesign like memcached
+organize todo
+add twitter meta data
+- get rid of google frame
 
-# Possible TODO
-- Re-write server scripts using argparse
-- Combine the server scripts into one program
+UPGRADE DJANGO
+- have email as username option
 
-# Future TODO
-- Use `distutils` to make a `setup.py`
-- Deploy DPB to PyPI
 
-# Completed
-- Server should use something like `lynx -dump checkip.dyndns.org 2>&1 | awk '{print $4}' | grep ^[0-9]` in place of the generic `my-django-powered-site.com`
-- Create `postgresbuilder.sh` or equivalent
-- Add Bootstrap and non-Bootstrap options
-- Add Zurb Foundation options
-- Make it so everything can be relative rather than absolute
-- Make more files generic
-- Clean up files
-- Organize folders
-- Write Contributors
-- Write Credits
-- If user is in a virtualenv, get out of it (or tell them to) before executing `djangobuilder.py`
-- Tell user _not_ to create virtualenv (we do it for them!)
-- Write README
-- Write Quick Start docs
-- Much more
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = ['']
+
+http://stackoverflow.com/questions/15128135/django-setting-debug-false-causes-500-error
+
+update readme
+delete server scripts
+make djangobuilder class-based

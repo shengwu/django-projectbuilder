@@ -1,6 +1,5 @@
 #!/bin/bash
 # Steve Phillips / elimisteve
-# 2012.02.10
 
 if [ $# -lt 2 ]; then
     echo Usage: `basename $0` project_name my_domain_name.com

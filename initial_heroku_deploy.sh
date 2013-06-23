@@ -1,11 +1,10 @@
 #!/bin/sh
 # Kevin Xu / imkevinxu
-# 2012.08.28
 #
 # Script for initial deploy to Heroku
 # Tested on Mac 10.7 (Lion) and 10.8 (Mountain Lion)
-#####################################
 
+####################################
 # Script that undos the work of the initial heroku deployment littered with emoticans
 # Invoked by an --undo parameter
 #
@@ -13,6 +12,7 @@
 # RESETS the git head back one commit, and
 # DESTROYS the heroku app
 #####################################
+
 if [ ! -d $1 ]; then
     if [ $1 == "--undo" ]; then
         echo
