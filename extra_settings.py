@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # Function that justifies the comments to start at 70 characters
 # no matter how long the piece of code is in the README.md
 def justify(contents):
@@ -12,7 +10,7 @@ def justify(contents):
     return '\n'.join(buf)
 
 def insert(original, new, pos):
-    '''Inserts new inside original at pos.'''
+    '''Inserts new string inside original at pos.'''
     return original[:pos] + new + original[pos:]
 
 # Files and function to add the right settings to enable bcrypt password hashing

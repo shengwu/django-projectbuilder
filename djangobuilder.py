@@ -1,14 +1,18 @@
-#!/usr/bin/env python
+#   @name                 djangobuilder.py
+#   @desc                 Builds custom Django project according to
+#                         arguments passed through command line
+#   @reqs                 python, virtualenv, virtualenvwrapper, git
+#   @version              v0.2
 #
-#   Original Authors:
-#   Steve Phillips -- steve@builtbyptm.com
-#   AJ v Bahnken   -- aj@builtbyptm.com
-#
-#   Custom Version
-#   Kevin Xu       -- kevin@imkevinxu.com
+#   @original_authors     Steve Phillips <steve@builtbyptm.com>
+#                         AJ v Bahnken <aj@builtbyptm.com>
+#   @personal_fork        Kevin Xu <kevin@imkevinxu.com>
+#   @copyright            Apache License, Version 2.0
+
+
 
 #
-#   Requires virtualenv, virtualenvwrapper, and git
+#   Python imports
 #
 
 import os
@@ -21,24 +25,10 @@ import sys
 from subprocess import Popen, call, STDOUT, PIPE
 
 
-def which(program):
 
-    import os
-
-    def is_exe(fpath):
-        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
-
-    fpath, fname = os.path.split(program)
-    if fpath:
-        if is_exe(program):
-            return program
-    else:
-        for path in os.environ["PATH"].split(os.pathsep):
-            exe_file = os.path.join(path, program)
-            if is_exe(exe_file):
-                return exe_file
-
-    return None
+#
+#   Check for initial conditions
+#
 
 try:
     import argparse
@@ -48,7 +38,6 @@ except ImportError:
     print "then re-run this script."
     sys.exit(1)
 
-
 # If user is in a virtualenv, tell them to get out first
 if hasattr(sys, 'real_prefix'):
     print "You're already in a virtualenv. Type\n"
@@ -56,79 +45,33 @@ if hasattr(sys, 'real_prefix'):
     print "to leave, then run this script again."
     sys.exit(1)
 
-VIRTUALENV_WRAPPER_PATH = which('virtualenvwrapper.sh')
-if VIRTUALENV_WRAPPER_PATH is None:
-    VIRTUALENV_WRAPPER_PATH = '/usr/local/bin/virtualenvwrapper.sh'
 
-if not os.path.isfile(VIRTUALENV_WRAPPER_PATH):
-    cmd = 'echo $VIRTUALENV_WRAPPER_PATH'
-    output = call(cmd, shell=True)
-    if output:
-        VIRTUALENV_WRAPPER_PATH = output
+
+#
+#   General Functions
+#
+
+def sh(cmd):
+    return Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE).communicate()[0]
+
+def which(program):
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+    fpath, fname = os.path.split(program)
+    if fpath and is_exe(program):
+            return program
     else:
-        print "We can not seem to find virtualenvwrapper\n"
-        print "Either install it through pip\n"
-        print "     sudo pip install virtualenvwrapper\n"
-        print "or set $VIRTUALENV_WRAPPER_PATH to the location of\n"
-        print "virtualenvwrapper on your machine."
-        sys.exit(1)
+        for path in os.environ["PATH"].split(os.pathsep):
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+    return None
 
-# We have what we need! Let's do this...
 
-DPB_PATH = os.path.abspath(os.path.dirname(__file__)) + '/'
-DJANGO_FILES_PATH = DPB_PATH + 'django-files/'
 
-# These are the arguments for the builder.  We can extend the
-# arguments as we want to add more functionality
-parser = argparse.ArgumentParser(description='''PTM Web Engineering presents
-                                 Django Project Builder''')
-
-# Simple arguments
-parser.add_argument('--version', '-v', action='version',
-                    version='Django Project Builder v0.1')
-parser.add_argument('--path', action='store', dest='path',
-                    help='''Specifies where the new Django project
-                    should be made, including the project name at the
-                    end (e.g. /home/username/code/project_name)''',
-                    required=True)
-parser.add_argument('-q', '--quiet', action='store_true', default=False,
-                    help='''Quiets all output except the finish message.''',
-                    dest='quiet')
-
-# Theme arguments
-parser.add_argument('--bootstrap', action='store_true', default=False,
-                    help='''This will include Bootstrap as the template
-                    and media base of the project.''', dest='bootstrap')
-parser.add_argument('--foundation', action='store_true', default=False,
-                    help='''This will include Foundation 3 as the template
-                    and media base of the project.''', dest='foundation')
-
-# Extra Packages
-parser.add_argument('--bcrypt', action='store_true', default=False,
-                    help='''This will install py-bcrypt and use bcrypt
-                    as the main password hashing for the project.''', dest='bcrypt')
-parser.add_argument('--debug', action='store_true', default=False,
-                    help='''This will install the Django Debug Toolbar
-                    package for the project.''', dest='debug')
-parser.add_argument('--jinja2', action='store_true', default=False,
-                    help='''This will install Jinja2 and Coffin as the default
-                    templating engine of the project.''', dest='jinja2')
-
-# SUPER Argument for imkevinxu
-parser.add_argument('--imkevinxu', action='store_true', default=False,
-                    help='''Super argument with default packages for imkevinxu
-                    including Foundation, Jinja2 and Debug Toolbar.''',
-                    dest='imkevinxu')
-
-arguments = parser.parse_args()
-
-# All arguments that imkevinxu enables
-if arguments.imkevinxu:
-    arguments.foundation = True
-    arguments.jinja2 = True
-    arguments.bcrypt = True
-    arguments.debug = True
-
+#
+#   Functions related to project setup
+#
 
 def check_projectname():
     if not re.search(r'^[_a-zA-Z]\w*$', PROJECT_NAME):
@@ -141,59 +84,184 @@ def check_projectname():
 
         sys.exit(message)
 
+def find_virtualenvwrapper():
+    path = which('virtualenvwrapper.sh')
+    if path is None:
+        path = '/usr/local/bin/virtualenvwrapper.sh'
+
+    if not os.path.isfile(path):
+        cmd = 'echo $VIRTUALENV_WRAPPER_PATH'
+        output = call(cmd, shell=True)
+        if output:
+            path = output
+        else:
+            print "We can not seem to find virtualenvwrapper.sh\n"
+            print "Either install it through pip\n"
+            print "     sudo pip install virtualenvwrapper\n"
+            print "or set $VIRTUALENV_WRAPPER_PATH to the location of\n"
+            print "virtualenvwrapper.sh on your machine."
+            sys.exit(1)
+    return path
+
+
+
+#
+#   Functions related to copying and string interpolating
+#   django and template files
+#
+
+# Imports extra settings related to extra packages
 from extra_settings import *
 
-
-def copy_files(folder_path, file_types, pathify):
-    """Copies the contents of django_files and server_scripts, and
-    performs string interpolations (e.g., %(PROJECT_NAME)s => 'myapp')"""
-    for filename in file_types:
-        # Grab *-needed filenames
-        f_read = open(folder_path + filename, 'r')
+# Copies the contents of django_files and server_scripts, and
+# performs string interpolations (e.g., %(PROJECT_NAME)s => 'myapp')
+def prepare_django_files(files):
+    for filename in files:
+        f_read = open(DJANGO_FILES_PATH + filename, 'r')
         contents = f_read.read()
         f_read.close()
-        # Replace %(SECRET_KEY)s, etc with new value for new project
-        if filename.endswith('-needed'):
-            new_filename = filename.replace('-needed', '')
-        # Loop through list of locations new_filename should be placed
-        for dir in pathify[new_filename]:
-            # Path names include '%(PROJECT_NAME)s', etc
-            file_path = dir % replacement_values
-            f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
-            new_contents = contents
-            if "%s" not in new_contents:
-                new_contents = contents % replacement_values
+
+        new_filename = filename.replace('-needed', '')
+        for dir in django_pathify[new_filename]:
 
             # Appends certain attributes and settings to some django files for
             # various extra packages according to the arguments
-            if arguments.bcrypt and new_filename in bcryptify_files:
-                new_contents = bcryptify(new_contents, new_filename)
-            if arguments.debug and new_filename in debugify_files:
-                new_contents = debugify(new_contents, new_filename)
-            if arguments.jinja2 and new_filename in jinjaify_files:
-                new_contents = jinjaify(new_contents, new_filename)
-                if new_filename == 'appurls.py':
-                    new_contents = new_contents % replacement_values
+            if ARGUMENTS.bcrypt and new_filename in bcryptify_files:
+                contents = bcryptify(contents, new_filename)
+            if ARGUMENTS.debug and new_filename in debugify_files:
+                contents = debugify(contents, new_filename)
+            if ARGUMENTS.jinja2 and new_filename in jinjaify_files:
+                contents = jinjaify(contents, new_filename)
 
             # Justifies the spacing for comments in code in README.md
             if new_filename == "README.md":
-                new_contents = justify(new_contents)
+                contents = justify(contents)
 
+            new_contents = contents if "%s" in contents else contents % replacement_values
+
+            file_path = dir % replacement_values
+            f_write = open(PROJECT_PATH + file_path + new_filename, 'a')
             f_write.write(new_contents)
             f_write.close()
 
+# Replace variables within the templates by performing custom
+# string interpolations (e.g., %(PROJECT_NAME)s => 'myapp')
+# because of existing % signs inside templating language
+def prepare_template_files():
+    templates_dir = PROJECT_PATH + 'templates/'
+    template_files = [x for x in os.listdir(templates_dir)]
+    for template in template_files:
+        f_read = open(templates_dir + template, 'r')
+        contents = f_read.read()
+        f_read.close()
 
-def sh(cmd):
-    return Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE).communicate()[0]
+        f_write = open(templates_dir + template, 'w')
+        for key, value in replacement_values.items():
+            contents = contents.replace('%(' + key + ')s', value)
 
-# Maps cleaned filenames to where each file should be copied relative
-# to PROJECT_PATH
+        if ARGUMENTS.foundation:
+            if ARGUMENTS.bcrypt and template in bcryptify_files:
+                contents = bcryptify(contents, template)
+            if ARGUMENTS.debug and template in debugify_files:
+                contents = debugify(contents, template)
+            if ARGUMENTS.jinja2 and template in jinjaify_template_files:
+                contents = jinjaify_templates(contents, template)
+
+        f_write.write(contents)
+        f_write.close()
+
+
+
+#
+#   Parses command line for arguments
+#
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='''Django Project Builder is the
+                        fastest, easiest way to build a new Django project''')
+
+    # Simple arguments
+    parser.add_argument('--version', '-v', action='version',
+                        version='Django Project Builder v0.2')
+    parser.add_argument('--path', action='store', dest='path',
+                        help='''Specifies where the new Django project
+                        should be made, including the project name at the
+                        end (e.g. /home/username/code/project_name)''',
+                        required=True)
+    parser.add_argument('-q', '--quiet', action='store_true', default=False,
+                        help='''Quiets all output except the finish message.''',
+                        dest='quiet')
+
+    # Theme arguments
+    parser.add_argument('--bootstrap', action='store_true', default=False,
+                        help='''This will include Bootstrap as the template
+                        and media base of the project.''', dest='bootstrap')
+    parser.add_argument('--foundation', action='store_true', default=False,
+                        help='''This will include Foundation 3 as the template
+                        and media base of the project.''', dest='foundation')
+
+    # Extra Packages
+    parser.add_argument('--bcrypt', action='store_true', default=False,
+                        help='''This will install py-bcrypt and use bcrypt
+                        as the main password hashing for the project.''', dest='bcrypt')
+    parser.add_argument('--debug', action='store_true', default=False,
+                        help='''This will install the Django Debug Toolbar
+                        package for the project.''', dest='debug')
+    parser.add_argument('--jinja2', action='store_true', default=False,
+                        help='''This will install Jinja2 and Coffin as the default
+                        templating engine of the project.''', dest='jinja2')
+
+    # SUPER Argument for imkevinxu
+    parser.add_argument('--imkevinxu', action='store_true', default=False,
+                        help='''Super argument with default packages for imkevinxu
+                        including Foundation, Jinja2 and Debug Toolbar.''',
+                        dest='imkevinxu')
+
+    arguments = parser.parse_args()
+
+    # All arguments that --imkevinxu enables
+    if arguments.imkevinxu:
+        arguments.foundation = True
+        arguments.jinja2 = True
+        arguments.bcrypt = True
+        arguments.debug = True
+
+    return arguments
+
+
+
+#
+#   Global Variables
+#
+
+# Arguments passed from command line
+ARGUMENTS = parse_arguments()
+
+# Django paths
+DPB_PATH = os.path.abspath(os.path.dirname(__file__)) + '/'
+DJANGO_FILES_PATH = DPB_PATH + 'django-files/'
+VIRTUALENV_WRAPPER_PATH = find_virtualenvwrapper()
+
+# Trailing / may be included or excluded up to this point
+PROJECT_PATH = ARGUMENTS.path.rstrip('/') + '/'
+PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0]  # Before the '/'
+BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
+
+# Admin Information
+ADMIN_NAME  = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else 'Agent Smith'
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else 'admin@example.com'
+SECRET_KEY  = ''.join([random.choice(string.printable[:94].replace("'", ""))
+                      for _ in range(50)])
+PROJECT_PASSWORD = ''.join([random.choice(string.printable[:62])
+                            for _ in range(30)])
+
+# Maps cleaned filenames to where each file should be copied relative to PROJECT_PATH
 django_pathify = {
     '.env':                         [''],
     '.env.dev':                     [''],
     '.foreman':                     [''],
     '.gitignore':                   [''],
-    '__init__.py':                  ['%(CONFIG_NAME)s/', '%(PROJECT_NAME)s/'],
+    '__init__.py':                  ['%(PROJECT_NAME)s/', '%(CONFIG_NAME)s/'],
     'admin.py':                     ['%(PROJECT_NAME)s/'],
     'appurls.py':                   ['%(PROJECT_NAME)s/'],
     'django.wsgi':                  ['apache/'],
@@ -215,24 +283,6 @@ django_pathify = {
     'wsgi.py':                      ['%(CONFIG_NAME)s/'],
 }
 
-# Trailing / may be included or excluded up to this point
-PROJECT_PATH = arguments.path.rstrip('/') + '/'
-PROJECT_NAME = PROJECT_PATH.split('/')[-2].split('_')[0]  # Before the '/'
-BASE_PATH    = '/'.join(PROJECT_PATH.split('/')[:-2]) + '/'
-
-# ADMIN INFORMATION
-ADMIN_NAME  = os.environ.get("ADMIN_NAME") if os.environ.get("ADMIN_NAME") else 'Agent Smith'
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL") if os.environ.get("ADMIN_EMAIL") else 'admin@example.com'
-
-# TODO
-# vewrapper = pbs.which('virtualenvwrapper.sh')
-# vewrapper("")
-
-SECRET_KEY = ''.join([random.choice(string.printable[:94].replace("'", ""))
-                      for _ in range(50)])
-PROJECT_PASSWORD = ''.join([random.choice(string.printable[:62])
-                            for _ in range(30)])
-
 # Defines key: value pairs so that
 #   '%(PROJECT_NAME)s' % replacement_values
 # evaluates to the value of the `PROJECT_NAME` variable, such as
@@ -249,125 +299,150 @@ replacement_values = {
     'CONFIG_NAME':      'config',
 }
 
-# Doing it this way so DPB can add 'extra_settings' on the fly.
-needed_dirs = ['static', 'apache', '%(CONFIG_NAME)s', '%(PROJECT_NAME)s']
 
-# Make sure PROJECT_NAME follows Django's restrictions
-check_projectname()
 
-if not arguments.quiet:
-    print "Creating directories..."
+#
+#   Builds Django Project
+#
 
-# Use 'git init' to create the PROJECT_PATH directory and turn it into
-# a git repo
-cmd = 'bash -c "git init %s"' % PROJECT_PATH
-output = sh(cmd)
+def build():
 
-if not arguments.quiet:
-    print '\n', output, '\n'
+    #
+    #   Make sure PROJECT_NAME follows Django's restrictions
+    #
 
-# Create all other dirs (each a sub-(sub-?)directory) of PROJECT_PATH
-for dir_name in needed_dirs:
-    os.mkdir(PROJECT_PATH + dir_name % replacement_values)
+    check_projectname()
 
-# Build list of all django-specific files to be copied into new project.
-django_files = [x for x in os.listdir(DJANGO_FILES_PATH)
-                if x.endswith('-needed')]
-if not arguments.jinja2:
-    django_files.remove('jinja2.py-needed')
+    #
+    #   Creates project folder and initializes git repo
+    #
 
-if not arguments.quiet:
-    print "Creating django files..."
+    if not ARGUMENTS.quiet:
+        print "\nCreating %s..." % PROJECT_NAME
 
-# Oddly-placed '%' in weird_files screws up our string interpolation,
-# so copy these files verbatim
-copy_files(DJANGO_FILES_PATH, django_files, django_pathify)
+    # Use 'git init' to create the PROJECT_PATH directory and turn it into a git repo
+    cmd = 'bash -c "git init %s"' % PROJECT_PATH
+    output = sh(cmd)
 
-if not arguments.quiet:
-    print "Copying directories..."
 
-# Add directory names here
-generic_dirs = ['media', 'templates']
-generic_dirs = [DPB_PATH + d for d in generic_dirs]
 
-for dirname in generic_dirs:
-    # cp -r media-generic $PROJECT_PATH/media && cp -r templates-generic ...
-    new_dir = PROJECT_PATH + dirname.split('/')[-1]
-    if arguments.bootstrap:
-        shutil.copytree(dirname + '-bootstrap', new_dir)
-    elif arguments.foundation:
-        shutil.copytree(dirname + '-foundation', new_dir)
-    else:
-        shutil.copytree(dirname + '-generic', new_dir)
+    #
+    #   Creates django directories and performs
+    #   string interpoliation on all django files
+    #
 
-template_needs_replacements = ['base.html', 'index.html', 'template.html', 'login.html', '500.html']
+    if not ARGUMENTS.quiet:
+        print "Creating django files..."
 
-# Replace %(VARIABLES)s with right values for templates
-# Loop through list of templates that should be replaced
-templates_dir = PROJECT_PATH + 'templates/'
-for template in template_needs_replacements:
-    f_read = open(templates_dir + template, 'r')
-    contents = f_read.read()
-    f_read.close()
+    # Django-related folders inside project
+    project_dirs = ['static', 'apache', '%(CONFIG_NAME)s', '%(PROJECT_NAME)s']
 
-    f_write = open(templates_dir + template, 'w')
-    for key, value in replacement_values.items():
-        contents = contents.replace('%(' + key + ')s', value)
+    for dir_name in project_dirs:
+        os.mkdir(PROJECT_PATH + dir_name % replacement_values)
 
-    if arguments.foundation:
-        if arguments.bcrypt and template in bcryptify_files:
-            contents = bcryptify(contents, template)
-        if arguments.debug and template in debugify_files:
-            contents = debugify(contents, template)
-        if arguments.jinja2 and template in jinjaify_template_files:
-            contents = jinjaify_templates(contents, template)
+    # Django-related files to be copied into new project
+    django_files = [x for x in os.listdir(DJANGO_FILES_PATH) if x.endswith('-needed')]
 
-    f_write.write(contents)
-    f_write.close()
+    if not ARGUMENTS.jinja2:
+        django_files.remove('jinja2.py-needed')
 
-if not arguments.quiet:
-    print "Making virtualenv..."
+    prepare_django_files(django_files)
 
-cmd  = 'bash -c "source %s &&' % VIRTUALENV_WRAPPER_PATH
-cmd += ' mkvirtualenv %s"' % PROJECT_NAME
 
-output = sh(cmd)
 
-if not arguments.quiet:
-    print '\n', output, '\n'
+    #
+    #   Creates media and template directories and performs
+    #   string interpolation on all template files
+    #
 
-## The below part is made much faster with a small requirements.txt.
-## We have the options to include more packages, which in turn
-## will take long, but of course is needed. This allows for making
-## projects which need only the basics, and ones that need a lot.
+    if not ARGUMENTS.quiet:
+        print "Creating media and template files..."
 
-if not arguments.quiet:
-    print "Running 'pip install -r requirements.txt'. This could take a while...",
-    print "(don't press control-c!)"
+    # Media and template directory names here
+    generic_dirs = ['media', 'templates']
+    generic_dirs = [DPB_PATH + d for d in generic_dirs]
 
-# FIXME Shouldn't assume the location of virtualenvwrapper.sh
-cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
-cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
-cmd += ' pip install -r requirements.txt && pip freeze > requirements.txt'
-cmd += ' && python manage.py collectstatic --noinput"'
+    # Recursively copies media and template files into respective folders
+    for dirname in generic_dirs:
+        new_dir = PROJECT_PATH + dirname.split('/')[-1]
+        if ARGUMENTS.bootstrap:
+            shutil.copytree(dirname + '-bootstrap', new_dir)
+        elif ARGUMENTS.foundation:
+            shutil.copytree(dirname + '-foundation', new_dir)
+        else:
+            shutil.copytree(dirname + '-generic', new_dir)
 
-output = sh(cmd)
+    prepare_template_files()
 
-if not arguments.quiet:
-    print '\n', output, '\n'
 
-# virtualenv now exists
 
-if not arguments.quiet:
-    print "Creating git repo..."
+    #
+    #   Creates the project's virtual environment
+    #
 
-cmd  = 'bash -c "cd %s &&' % PROJECT_PATH
-cmd += ' git add . && git commit -m \'first commit\'"'
-output = sh(cmd)
+    if not ARGUMENTS.quiet:
+        print "Creating virtualenv..."
 
-if not arguments.quiet:
-    print '\n', output, '\n'
+    cmd  = 'bash -c "source %s &&' % VIRTUALENV_WRAPPER_PATH
+    cmd += ' mkvirtualenv %s"' % PROJECT_NAME
 
-print "\nDone! Now run\n"
-print "    cd %(PROJECT_PATH)s && workon %(PROJECT_NAME)s &&" % replacement_values,
-print "python manage.py syncdb\n\nGet to work!"
+    output = sh(cmd)
+
+    if not ARGUMENTS.quiet:
+        print '\n', output
+
+
+
+    #
+    #   Installs python packages from requirements.txt inside the project's
+    #   virtualenv and collects static assets
+    #
+
+    if not ARGUMENTS.quiet:
+        print "Running 'pip install -r requirements.txt'. This could take a while...",
+        print "(don't press control-c!)"
+
+    cmd  = 'bash -c "source %s && workon' % VIRTUALENV_WRAPPER_PATH
+    cmd += ' %(PROJECT_NAME)s && cd %(PROJECT_PATH)s &&' % replacement_values
+    cmd += ' pip install -r requirements.txt && pip freeze > requirements.txt'
+    cmd += ' && python manage.py collectstatic --noinput"'
+
+    output = sh(cmd)
+
+    if not ARGUMENTS.quiet:
+        print '\n', output
+
+
+
+    #
+    #   First commit
+    #
+
+    if not ARGUMENTS.quiet:
+        print "Creating git repo..."
+
+    cmd  = 'bash -c "cd %s &&' % PROJECT_PATH
+    cmd += ' git add . && git commit -m \'first commit\'"'
+    output = sh(cmd)
+
+    if not ARGUMENTS.quiet:
+        print '\n', output
+
+
+
+    #
+    #   Complete!
+    #
+
+    print "Complete! Now run\n"
+    print "    cd %(PROJECT_PATH)s && workon %(PROJECT_NAME)s &&" % replacement_values,
+    print "python manage.py syncdb\n\nGet to work!"
+
+
+
+#
+#   Command Line Interface
+#
+
+if __name__ == '__main__':
+    build()

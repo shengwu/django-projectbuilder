@@ -27,3 +27,7 @@ http://stackoverflow.com/questions/15128135/django-setting-debug-false-causes-50
 update readme
 delete server scripts
 make djangobuilder class-based
+
+
+ /Users/kevinxu/.virtualenvs/lol/lib/python2.7/site-packages/django/conf/urls/defaults.py:3: DeprecationWarning: django.conf.urls.defaults is deprecated; use django.conf.urls instead DeprecationWarning)
+/Users/kevinxu/.virtualenvs/lol/lib/python2.7/site-packages/django/utils/hashcompat.py:9: DeprecationWarning: django.utils.hashcompat is deprecated; use hashlib instead DeprecationWarning)
