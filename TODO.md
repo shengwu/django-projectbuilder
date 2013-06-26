@@ -23,11 +23,7 @@ djangobuilder.py line 162
 
 check all theme combinations with all extra settings combinations..... especially url()
 
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['']
 
-http://stackoverflow.com/questions/15128135/django-setting-debug-false-causes-500-error
 
 update readme
 
