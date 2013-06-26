@@ -195,7 +195,7 @@ def parse_arguments():
     # Theme choice argument
     parser.add_argument('--theme', action='store', default=False,
                         choices=['bootstrap', 'foundation'],
-                        help='''This will include an theme package for CSS/JS
+                        help='''This will include an frontend theme for CSS/JS
                         like Bootstrap, Foundation, or Generic.''', dest='theme')
 
     # Extra Packages
@@ -349,18 +349,18 @@ def build():
 
 
     #
-    #   Creates media and template directories and performs
+    #   Creates static and template directories and performs
     #   string interpolation on all template files
     #
 
     if not ARGUMENTS.quiet:
-        print "Creating media and template files..."
+        print "Creating static and template files..."
 
-    # Media and template directory names here
-    generic_dirs = ['media', 'templates']
+    # Static and template directory names here
+    generic_dirs = ['static', 'templates']
     generic_dirs = [DPB_PATH + d for d in generic_dirs]
 
-    # Recursively copies media and template files into respective folders
+    # Recursively copies static and template files into respective folders
     for dirname in generic_dirs:
         new_dir = PROJECT_PATH + dirname.split('/')[-1]
         if not ARGUMENTS.theme:

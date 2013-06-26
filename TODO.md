@@ -10,9 +10,11 @@ add/organize media packages or move to static
     html5 responsive
 have custom grids and themes
 check out packages used in hackdesign like memcached
-organize todo
 add twitter meta data
 - get rid of google frame
+
+
+media vs static asset pipelins
 
 UPGRADE DJANGO
 - have email as username option
@@ -24,8 +26,8 @@ djangobuilder.py line 162
 check all theme combinations with all extra settings combinations..... especially url()
 
 
-
 update readme
+organize todo
 
 
  /Users/kevinxu/.virtualenvs/lol/lib/python2.7/site-packages/django/conf/urls/defaults.py:3: DeprecationWarning: django.conf.urls.defaults is deprecated; use django.conf.urls instead DeprecationWarning)
