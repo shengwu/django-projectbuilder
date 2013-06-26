@@ -159,7 +159,7 @@ def prepare_template_files():
         for key, value in replacement_values.items():
             contents = contents.replace('%(' + key + ')s', value)
 
-        if ARGUMENTS.foundation:
+        if ARGUMENTS.theme == 'foundation':
             if ARGUMENTS.bcrypt and template in bcryptify_files:
                 contents = bcryptify(contents, template)
             if ARGUMENTS.debug and template in debugify_files:
@@ -192,13 +192,11 @@ def parse_arguments():
                         help='''Quiets all output except the finish message.''',
                         dest='quiet')
 
-    # Theme arguments
-    parser.add_argument('--bootstrap', action='store_true', default=False,
-                        help='''This will include Bootstrap as the template
-                        and media base of the project.''', dest='bootstrap')
-    parser.add_argument('--foundation', action='store_true', default=False,
-                        help='''This will include Foundation 3 as the template
-                        and media base of the project.''', dest='foundation')
+    # Theme choice argument
+    parser.add_argument('--theme', action='store', default=False,
+                        choices=['bootstrap', 'foundation'],
+                        help='''This will include an theme package for CSS/JS
+                        like Bootstrap, Foundation, or Generic.''', dest='theme')
 
     # Extra Packages
     parser.add_argument('--bcrypt', action='store_true', default=False,
@@ -214,14 +212,14 @@ def parse_arguments():
     # SUPER Argument for imkevinxu
     parser.add_argument('--imkevinxu', action='store_true', default=False,
                         help='''Super argument with default packages for imkevinxu
-                        including Foundation, Jinja2 and Debug Toolbar.''',
+                        using his favorite best practices''',
                         dest='imkevinxu')
 
     arguments = parser.parse_args()
 
     # All arguments that --imkevinxu enables
     if arguments.imkevinxu:
-        arguments.foundation = True
+        arguments.theme = 'foundation'
         arguments.jinja2 = True
         arguments.bcrypt = True
         arguments.debug = True
@@ -365,12 +363,10 @@ def build():
     # Recursively copies media and template files into respective folders
     for dirname in generic_dirs:
         new_dir = PROJECT_PATH + dirname.split('/')[-1]
-        if ARGUMENTS.bootstrap:
-            shutil.copytree(dirname + '-bootstrap', new_dir)
-        elif ARGUMENTS.foundation:
-            shutil.copytree(dirname + '-foundation', new_dir)
-        else:
+        if not ARGUMENTS.theme:
             shutil.copytree(dirname + '-generic', new_dir)
+        else:
+            shutil.copytree(dirname + '-' + ARGUMENTS.theme, new_dir)
 
     prepare_template_files()
 

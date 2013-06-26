@@ -18,6 +18,11 @@ UPGRADE DJANGO
 - have email as username option
 
 
+!!! MAKE extra settings work for all themes, right now only works on foundation
+djangobuilder.py line 162
+
+check all theme combinations with all extra settings combinations..... especially url()
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['']
