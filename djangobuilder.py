@@ -333,7 +333,7 @@ def build():
         print "Creating django files..."
 
     # Django-related folders inside project
-    project_dirs = ['static', 'apache', '%(CONFIG_NAME)s', '%(PROJECT_NAME)s']
+    project_dirs = ['apache', '%(CONFIG_NAME)s', '%(PROJECT_NAME)s']
 
     for dir_name in project_dirs:
         os.mkdir(PROJECT_PATH + dir_name % replacement_values)
