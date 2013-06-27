@@ -11,9 +11,9 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}" />
     <meta name="author" content="{% block meta_author %}{% endblock %}" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
-    {# TODO: <link rel="icon" type="image/x-icon" href="{{ MEDIA_URL }}images/favicon.png" /> #}
-    {# TODO: <link rel="apple-touch-icon" href="{{ MEDIA_URL }}images/apple-touch-icon.png" /> #}
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css" />
+    {# TODO: <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}images/favicon.png" /> #}
+    {# TODO: <link rel="apple-touch-icon" href="{{ STATIC_URL }}images/apple-touch-icon.png" /> #}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" />
    <!--[if gte IE 9]>
   <style type="text/css">
     .gradient {
@@ -23,7 +23,7 @@
     <![endif]-->
     {% block extra_head %}{% endblock %}
     <!--      To enable Modernizr uncomment the below line.     -->
-    <!--<script src="{{ MEDIA_URL }}js/modernizr-2.5.3.min.js"></script>-->
+    <!--<script src="{{ STATIC_URL }}js/modernizr-2.5.3.min.js"></script>-->
 </head>
 
 <body class="body">
@@ -60,7 +60,7 @@
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{ MEDIA_URL }}js/jquery-1.8.2.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/jquery-1.8.2.min.js"><\/script>')</script>
     {% block javascript %}{% endblock %}
 
     <!-- <script>

@@ -11,36 +11,36 @@
 
     <title>{% block title %}%(PROJECT_NAME_CAP)s{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{% endblock %}" />
-    {# TODO: <link rel="icon" type="image/x-icon" href="{{ MEDIA_URL }}images/favicon.png" /> #}
+    {# TODO: <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}images/favicon.png" /> #}
 
     <!-- Apple Meta Data -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {# TODO: <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}images/apple-touch-icon.png" /> #}
+    {# TODO: <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}images/apple-touch-icon.png" /> #}
 
     <!-- Facebook Meta Data -->
     <!-- <meta property="og:url" content="http://example.com/" />
     <meta property="og:title" content="" />
     <meta property="og:description" content="" />
-    <meta property="og:image" content="http://example.com{{ MEDIA_URL }}images/logo.png" />
+    <meta property="og:image" content="http://example.com{{ STATIC_URL }}images/logo.png" />
     <meta property="og:type" content="website" /> -->
 
     <!-- Included CSS Files (Uncompressed) -->
-    <!-- <link rel="stylesheet" href="{{ MEDIA_URL }}css/foundation.css"> -->
+    <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/foundation.css"> -->
 
     <!-- Included CSS Files -->
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/normalize.css" />
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/foundation.min.css" />
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/app.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/foundation.min.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css" />
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/foundation.icons.css">
-    <!-- <link rel="stylesheet" href="{{ MEDIA_URL }}css/responsive-tables.css"> -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/foundation.icons.css">
+    <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/responsive-tables.css"> -->
 
     <!--[if lt IE 9]>
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/ie.css">
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/foundation.icons-ie7.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/ie.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/foundation.icons-ie7.css">
     <![endif]-->
     <!--[if gte IE 9]>
         <style type="text/css">
@@ -52,7 +52,7 @@
 
     {% block extra_head %}{% endblock %}
 
-    <script src="{{ MEDIA_URL }}js/modernizr.js"></script>
+    <script src="{{ STATIC_URL }}js/modernizr.js"></script>
 
     <!-- IE Fix for HTML5 Tags -->
     <!--[if lt IE 9]>
@@ -106,15 +106,15 @@
 
     <!-- jQuery 1.9.1 -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{ MEDIA_URL }}js/jquery.1.9.1.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/jquery.1.9.1.min.js"><\/script>')</script>
 
     <!-- Included JS Files -->
-    <script src="{{ MEDIA_URL }}js/foundation.min.js"></script>
-    <script src="{{ MEDIA_URL }}js/app.js"></script>
+    <script src="{{ STATIC_URL }}js/foundation.min.js"></script>
+    <script src="{{ STATIC_URL }}js/app.js"></script>
 
     <!-- Additional JS Files -->
-    <!-- <script src="{{ MEDIA_URL }}js/jquery.responsive-tables.js"></script> -->
-    <!-- <script src="{{ MEDIA_URL }}js/jquery.textchange.min.js"></script> -->
+    <!-- <script src="{{ STATIC_URL }}js/jquery.responsive-tables.js"></script> -->
+    <!-- <script src="{{ STATIC_URL }}js/jquery.textchange.min.js"></script> -->
 
     {% block javascript %}{% endblock %}
 
