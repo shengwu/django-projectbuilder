@@ -40,16 +40,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="{% url index %}">Project Name</a>
+          <a class="brand" href="{% url "index" %}">Project Name</a>
           <div class="nav-collapse">
             <ul class="nav">
             <!--TODO: Django auto class="active"?-->
-              <li><a href="{% url index %}">Home</a></li>
+              <li><a href="{% url "index" %}">Home</a></li>
               {% if request.user.is_authenticated %}
-              <li><a href="{# url dashboard #}">Dashboard</a></li>
-              <li><a href="{% url logout %}">Logout</a></li>
+              <li><a href="{# url "dashboard" #}">Dashboard</a></li>
+              <li><a href="{% url "logout" %}">Logout</a></li>
               {% else %}
-              <li><a href="{% url login %}">Login</a></li>
+              <li><a href="{% url "login" %}">Login</a></li>
               {% endif %}
             </ul>
             {#{% if request.user.is_authenticated %}<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>{% endif %}#}
@@ -74,8 +74,8 @@
         <div class="row">
         <footer class="center">
         <hr />
-        <p><a href="{% url index %}">Home</a> | <a href="{# url about #}">About</a> | <a href="{# url contact #}">Contact</a>
-         | {% if request.user.is_authenticated %} <a href="{% url logout %}">Log Out</a>{% else %}<a href="{% url login %}">Login</a>{% endif %}
+        <p><a href="{% url "index" %}">Home</a> | <a href="{# url "about" #}">About</a> | <a href="{# url "contact" #}">Contact</a>
+         | {% if request.user.is_authenticated %} <a href="{% url "logout" %}">Log Out</a>{% else %}<a href="{% url "login" %}">Login</a>{% endif %}
          <br /><br />
          <b>Powered by: <a href="https://www.djangoproject.com/">Django</a> and <a href="http://twitter.github.com/bootstrap/">Bootstrap</a></b>
          </footer>

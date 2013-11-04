@@ -6,7 +6,7 @@
     <div class="large-5 large-centered columns">
         <h2>Welcome</h2>
 
-        <form action="{% url login %}" method="post">{% csrf_token %}
+        <form action="{% url "login" %}" method="post">{% csrf_token %}
 
             {{ form.as_ul }}
             <input type="hidden" name="next" value="{{ next }}" />

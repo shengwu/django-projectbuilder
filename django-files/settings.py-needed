@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 
 SITE_ID = 1
 
-# DATABASE variable is set in settings_local.py for development
+# DATABASE variable is set in local_settings.py for development
 # and at the bottom of settings.py for production on heroku
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -168,7 +168,7 @@ LOGGING = {
 ####
 if 'PRODUCTION' not in os.environ:
     try:
-        from settings_local import *
+        from local_settings import *
     except ImportError:
         try:
             from mod_python import apache
