@@ -7,6 +7,7 @@
 #   @original_authors     Steve Phillips <steve@builtbyptm.com>
 #                         AJ v Bahnken <aj@builtbyptm.com>
 #   @personal_fork        Kevin Xu <kevin@imkevinxu.com>
+#   @personal_fork        Sheng Wu <pkernoobie@gmail.com>
 #   @copyright            Apache License, Version 2.0
 
 
@@ -215,6 +216,12 @@ def parse_arguments():
                         using his favorite best practices''',
                         dest='imkevinxu')
 
+    # Custom best practices for swengw
+    parser.add_argument('--swengw', action='store_true', default=False,
+                        help='''Super argument with default packages for swengw
+                        using his favorite best practices''',
+                        dest='swengw')
+
     arguments = parser.parse_args()
 
     # All arguments that --imkevinxu enables
@@ -223,6 +230,9 @@ def parse_arguments():
         arguments.jinja2 = True
         arguments.bcrypt = True
         arguments.debug = True
+
+    if arguments.swengw:
+        arguments.theme = 'bootstrap'
 
     return arguments
 
@@ -259,12 +269,12 @@ django_pathify = {
     '.env.dev':                     [''],
     '.foreman':                     [''],
     '.gitignore':                   [''],
-    '__init__.py':                  ['%(PROJECT_NAME)s/', '%(CONFIG_NAME)s/'],
+    '__init__.py':                  ['%(PROJECT_NAME)s/'],
     'admin.py':                     ['%(PROJECT_NAME)s/'],
     'appurls.py':                   ['%(PROJECT_NAME)s/'],
     'django.wsgi':                  ['apache/'],
     'forms.py':                     ['%(PROJECT_NAME)s/'],
-    'jinja2.py':                    ['%(CONFIG_NAME)s/'],
+    'jinja2.py':                    ['%(PROJECT_NAME)s/'],
     'manage.py':                    [''],
     'model_forms.py':               ['%(PROJECT_NAME)s/'],
     'models.py':                    ['%(PROJECT_NAME)s/'],
@@ -273,12 +283,12 @@ django_pathify = {
     'Procfile.dev':                 [''],
     'README.md':                    [''],
     'requirements.txt':             [''],
-    'settings.py':                  ['%(CONFIG_NAME)s/'],
-    'settings_local.py':            ['%(CONFIG_NAME)s/'],
+    'settings.py':                  ['%(PROJECT_NAME)s/'],
+    'local_settings.py':            ['%(PROJECT_NAME)s/'],
     'tests.py':                     ['%(PROJECT_NAME)s/'],
-    'urls.py':                      ['%(CONFIG_NAME)s/'],
+    'urls.py':                      ['%(PROJECT_NAME)s/'],
     'views.py':                     ['%(PROJECT_NAME)s/'],
-    'wsgi.py':                      ['%(CONFIG_NAME)s/'],
+    'wsgi.py':                      ['%(PROJECT_NAME)s/'],
 }
 
 # Defines key: value pairs so that
@@ -294,7 +304,6 @@ replacement_values = {
     'PROJECT_PATH':     PROJECT_PATH,
     'ADMIN_NAME':       ADMIN_NAME,
     'ADMIN_EMAIL':      ADMIN_EMAIL,
-    'CONFIG_NAME':      'config',
 }
 
 
@@ -333,7 +342,7 @@ def build():
         print "Creating django files..."
 
     # Django-related folders inside project
-    project_dirs = ['apache', '%(CONFIG_NAME)s', '%(PROJECT_NAME)s']
+    project_dirs = ['apache', '%(PROJECT_NAME)s']
 
     for dir_name in project_dirs:
         os.mkdir(PROJECT_PATH + dir_name % replacement_values)

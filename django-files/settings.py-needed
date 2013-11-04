@@ -106,9 +106,9 @@ LOGIN_URL = '/login/'
 
 LOGOUT_URL = '/logout/'
 
-ROOT_URLCONF = '%(CONFIG_NAME)s.urls'
+ROOT_URLCONF = '%(PROJECT_NAME)s.urls'
 
-WSGI_APPLICATION = '%(CONFIG_NAME)s.wsgi.application'
+WSGI_APPLICATION = '%(PROJECT_NAME)s.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates/'),
